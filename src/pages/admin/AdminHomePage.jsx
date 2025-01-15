@@ -1,10 +1,16 @@
 import React from "react";
+import { WelcomeCard } from "../../components";
 
 const AdminHomePage = () => {
   return (
-    <div>
-      <p className="text-6xl">AdminHomePage</p>
-    </div>
+    <main className="p-5">
+      <div className="breadcrumbs text-xl text-[#14532D]">
+        <ul>
+          <li>Dashboard</li>
+        </ul>
+      </div>
+      <WelcomeCard />
+    </main>
   );
 };
 
