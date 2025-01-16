@@ -23,7 +23,7 @@ const FeaturedCard = ({ furniture }) => {
           shadows
           style={{
             background:
-              "radial-gradient(circle, rgba(120,120,120,1) 0%, rgba(0,0,0,1) 100%)",
+              "radial-gradient(circle, rgba(70,70,70,1) 0%, rgba(0,0,0,1) 100%)",
           }}
         >
           <ambientLight intensity={0.5} />
@@ -38,14 +38,14 @@ const FeaturedCard = ({ furniture }) => {
           <OrbitControls autoRotate autoRotateSpeed={5} />
         </Canvas>
       </figure>
-      <div className="card-body text-green-900">
+      <div className="card-body text-[#6D6666]">
         <h2 className="card-title">
           {name} <div className="badge badge-error bg-opacity-50">NEW</div>
         </h2>
-        <p className="line-clamp-2 text-green-950">{description}</p>
+        <p className="line-clamp-2">{description}</p>
         <div>
           <p className="font-medium">Dimensions:</p>
-          <p>{`${length}M X ${width}M X ${height}M`}</p>
+          <p>{`${length}m X ${width}m X ${height}m`}</p>
         </div>
         <div className="card-actions justify-end">
           <button className="p-2 text-green-900 hover:bg-green-900 hover:bg-opacity-30 rounded-full">

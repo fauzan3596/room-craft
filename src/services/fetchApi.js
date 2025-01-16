@@ -65,12 +65,12 @@ export const fetchAllFurnitures = async () => {
   return data;
 };
 
-//   export const addFurnitureToRoom = async ({ roomId, furniture }) => {
-//     const roomRef = doc(db, "rooms", roomId);
-//     await updateDoc(roomRef, { furnitures: arrayUnion(furniture) });
-//   };
+  export const addFurnitureToRoom = async ({ roomId, furniture }) => {
+    const roomRef = doc(db, "rooms", roomId);
+    await updateDoc(roomRef, { furnitures: arrayUnion(furniture) });
+  };
 
-//   export const saveRoomDesign = async ({ roomId, newRoom }) => {
-//     const roomRef = doc(db, "rooms", roomId);
-//     await updateDoc(roomRef, newRoom);
-//   };
+  export const saveRoomDesign = async ({ roomId, newRoom }) => {
+    const roomRef = doc(db, "rooms", roomId);
+    await updateDoc(roomRef, newRoom);
+  };
