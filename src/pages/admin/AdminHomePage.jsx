@@ -1,5 +1,5 @@
 import React from "react";
-import { WelcomeCard } from "../../components";
+import { DetailCard, FeaturedProducts, WelcomeCard } from "../../components";
 
 const AdminHomePage = () => {
   return (
@@ -10,6 +10,11 @@ const AdminHomePage = () => {
         </ul>
       </div>
       <WelcomeCard />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
+        <DetailCard type="products" />
+        <DetailCard type="users" />
+      </div>
+      <FeaturedProducts />
     </main>
   );
 };
