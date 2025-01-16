@@ -43,7 +43,7 @@ const LandingPage = () => {
       <HeroBanner />
 
       {/* Featured Products */}
-      <section id="products" className="container mx-auto py-12 px-4 bg-red-100">
+      <section id="products" className="mx-auto py-12 px-4 bg-red-100">
         <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">Transform Your Space</h2>
         <p className="text-lg text-center text-gray-600 mb-12">
           Bring your room to life with RoomCraft's 3D design platform. Seamlessly plan and visualize your ideal layout

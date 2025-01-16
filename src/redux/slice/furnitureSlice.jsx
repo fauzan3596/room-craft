@@ -1,0 +1,34 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+
+
+const furnitureSlice = createSlice({
+  name: "furnitures",
+  initialState: {
+    furnitures: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    fetchFurnitureStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchFurnitureFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    fetchFurnireSuccess: (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.furnitures = action.payload;
+    },
+  },
+});
+
+export const {
+  fetchFurnitureStart,
+  fetchFurnitureFailed,
+  fetchFurnireSuccess,
+} = furnitureSlice.actions;
+export default furnitureSlice.reducer;
