@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UploadWidget } from "../../components";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addFurniture } from "../../services/fetchApi";
@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const AddDataPage = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -28,6 +29,7 @@ const AddDataPage = () => {
         title: "Success",
         text: "New furniture has been added successfully",
       });
+      navigate("/admin/master-data");
     },
     onError: (error) => {
       Swal.fire({

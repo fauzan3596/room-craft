@@ -1,8 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AdminLayout } from "../layouts";
-import { AddDataPage, AdminHomePage, MasterDataPage, UserDataPage } from "../pages";
+import {
+  AddDataPage,
+  AdminHomePage,
+  LandingPage,
+  MasterDataPage,
+  UserDataPage,
+} from "../pages";
 
 const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
   {
     path: "/admin",
     element: <AdminLayout />,
