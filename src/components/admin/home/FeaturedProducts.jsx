@@ -7,7 +7,7 @@ const FeaturedProducts = () => {
   return (
     <section className="mt-5">
       <h2 className="text-green-900 text-xl font-medium">Featured Products</h2>
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-3 mt-3">
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-x-3 gap-y-8 mt-3">
         {furnitures.slice(0, 3).map((furniture) => (
           <FeaturedCard key={furniture.id} furniture={furniture} />
         ))}

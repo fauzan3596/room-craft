@@ -1,17 +1,32 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UploadWidgetImage, UploadWidgetModel } from "../../components";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addFurniture } from "../../services/fetchApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { fetchFurnitureById, updateFurniture } from "../../services/fetchApi";
+import {
+  Loading,
+  UploadWidgetImage,
+  UploadWidgetModel,
+} from "../../components";
 import Swal from "sweetalert2";
 
-const AddDataPage = () => {
+const EditDataPage = () => {
+  const { id } = useParams();
+  const {
+    data: furniture,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["furniture", id],
+    queryFn: () => fetchFurnitureById(id),
+  });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    category: "Electronics",
+    category: "",
     length: "",
     width: "",
     height: "",
@@ -19,8 +34,23 @@ const AddDataPage = () => {
     imgUrl: "",
   });
 
-  const addMutation = useMutation({
-    mutationFn: addFurniture,
+  useEffect(() => {
+    if (furniture) {
+      setFormData({
+        name: furniture?.name,
+        description: furniture?.description,
+        category: furniture?.category,
+        length: furniture?.length,
+        width: furniture?.width,
+        height: furniture?.height,
+        modelUrl: furniture?.modelUrl,
+        imgUrl: furniture?.imgUrl,
+      });
+    }
+  }, [furniture]);
+
+  const updateMutation = useMutation({
+    mutationFn: updateFurniture,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["furnitures"],
@@ -28,7 +58,7 @@ const AddDataPage = () => {
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: "New furniture has been added successfully",
+        text: "Your furniture has been updated successfully",
       });
       navigate("/admin/master-data");
     },
@@ -36,30 +66,28 @@ const AddDataPage = () => {
       Swal.fire({
         icon: "error",
         title: "Error Adding Data",
-        text: error.response?.data?.message || "Something went wrong!",
+        text: error,
       });
     },
   });
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!formData.modelUrl && !formData.imgUrl) {
-      return Swal.fire({
-        title: "Error!",
-        text: "Please upload an image",
-        icon: "error",
-      });
-    }
     const newFurniture = {
+      ...furniture,
       ...formData,
-      position: [0, 0, 0],
-      rotation: [0, 0, 0],
-      scale: [1, 1, 1],
-      createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    addMutation.mutate(newFurniture);
+    updateMutation.mutate({ id, newFurniture });
   };
+
+  if (isError) {
+    return <p>Error...</p>;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <main className="p-5">
@@ -68,11 +96,11 @@ const AddDataPage = () => {
           <li>
             <Link to="/admin/master-data">Master Data</Link>
           </li>
-          <li>Add Data</li>
+          <li>Edit Data</li>
         </ul>
       </div>
       <div className="bg-green-900 bg-opacity-10 p-5 mt-4 rounded-lg text-[#6D6666]">
-        <h2 className="text-xl font-bold text-[#4A4140]">Add Product</h2>
+        <h2 className="text-xl font-bold text-[#4A4140]">Edit Product</h2>
         <form className="form-control" onSubmit={submitHandler}>
           <div className="flex md:flex-row flex-col pt-5 pb-3">
             <label className="font-medium pb-3 md:pb-0 basis-1/4">Name</label>
@@ -93,7 +121,7 @@ const AddDataPage = () => {
             </label>
             <textarea
               type="text"
-              placeholder="Wooden chair is made of wood"
+              placeholder="Wooden chair is made of woods"
               className="textarea textarea-bordered w-full"
               value={formData.description}
               onChange={(e) =>
@@ -171,6 +199,7 @@ const AddDataPage = () => {
               setModelUrl={(public_id) =>
                 setFormData({ ...formData, modelUrl: public_id })
               }
+              modelId={formData.modelUrl}
             />
           </div>
           <div className="flex md:flex-row flex-col my-3">
@@ -179,6 +208,7 @@ const AddDataPage = () => {
               setImgUrl={(public_id) =>
                 setFormData({ ...formData, imgUrl: public_id })
               }
+              imgId={formData.imgUrl}
             />
           </div>
           <div className="flex justify-end mt-3">
@@ -195,4 +225,4 @@ const AddDataPage = () => {
   );
 };
 
-export default AddDataPage;
+export default EditDataPage;

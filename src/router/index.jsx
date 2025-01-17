@@ -3,6 +3,7 @@ import { AdminLayout } from "../layouts";
 import {
   AddDataPage,
   AdminHomePage,
+  EditDataPage,
   LandingPage,
   MasterDataPage,
   UserDataPage,
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/user-data",
         element: <UserDataPage />,
+      },
+      {
+        path: "/admin/master-data/edit/:id",
+        element: <EditDataPage />,
       },
     ],
   },

@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-const UploadWidget = ({ setModelUrl, modelId = "No file chosen" }) => {
-  const [modelName, setModelName] = useState(modelId);
+const UploadWidgetImage = ({ setImgUrl, imgId }) => {
+  const [imgName, setImgName] = useState("No file chosen");
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
+
+  useEffect(() => {
+    setImgName(imgId);
+  }, [imgId]);
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
@@ -14,12 +18,12 @@ const UploadWidget = ({ setModelUrl, modelId = "No file chosen" }) => {
       },
       function (error, result) {
         if (result.event === "success") {
-          setModelName(result.info.display_name + "." + result.info.format);
-          setModelUrl(result.info.public_id);
+          setImgName(result.info.display_name + "." + result.info.format);
+          setImgUrl(result.info.public_id);
         }
       }
     );
-  }, [setModelUrl]);
+  }, [setImgUrl]);
 
   return (
     <div className="w-full">
@@ -31,10 +35,10 @@ const UploadWidget = ({ setModelUrl, modelId = "No file chosen" }) => {
         <div className="bg-[#3E7157] h-full min-w-28 flex items-center rounded-md font-medium text-white">
           <p className="mx-auto">Choose File</p>
         </div>
-        <p className="ps-3 line-clamp-1">{modelName}</p>
+        <p className="ps-3 line-clamp-1">{imgName}</p>
       </button>
     </div>
   );
 };
 
-export default UploadWidget;
+export default UploadWidgetImage;

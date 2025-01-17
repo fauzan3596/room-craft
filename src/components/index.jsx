@@ -4,7 +4,12 @@ import DetailCard from "./admin/home/DetailCard";
 import FeaturedProducts from "./admin/home/FeaturedProducts";
 import FeaturedCard from "./admin/home/FeaturedCard";
 import FeaturedModel from "./admin/home/FeaturedModel";
-import UploadWidget from "./admin/add-product/UploadWidget";
+import UploadWidgetModel from "./admin/add-product/UploadWidgetModel";
+import UploadWidgetImage from "./admin/add-product/UploadWidgetImage";
+import Loading from "./admin/Loading";
+import TableData from "./admin/master-data/TableData";
+import CardData from "./admin/master-data/CardData";
+import ProductDataCard from "./admin/master-data/ProductDataCard";
 
 export {
   Navbar,
@@ -13,5 +18,10 @@ export {
   FeaturedProducts,
   FeaturedCard,
   FeaturedModel,
-  UploadWidget,
+  UploadWidgetModel,
+  UploadWidgetImage,
+  Loading,
+  TableData,
+  CardData,
+  ProductDataCard,
 };
