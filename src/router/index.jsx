@@ -4,6 +4,7 @@ import {
   AddDataPage,
   AdminHomePage,
   EditDataPage,
+  ErrorAdminPage,
   LandingPage,
   MasterDataPage,
   UserDataPage,
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/master-data/edit/:id",
         element: <EditDataPage />,
+      },
+      {
+        path: "*",
+        element: <ErrorAdminPage />,
       },
     ],
   },

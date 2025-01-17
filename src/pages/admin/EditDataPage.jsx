@@ -8,6 +8,7 @@ import {
   UploadWidgetModel,
 } from "../../components";
 import Swal from "sweetalert2";
+import ErrorAdminPage from "./ErrorAdminPage";
 
 const EditDataPage = () => {
   const { id } = useParams();
@@ -15,7 +16,6 @@ const EditDataPage = () => {
     data: furniture,
     isLoading,
     isError,
-    error,
   } = useQuery({
     queryKey: ["furniture", id],
     queryFn: () => fetchFurnitureById(id),
@@ -82,7 +82,7 @@ const EditDataPage = () => {
   };
 
   if (isError) {
-    return <p>Error...</p>;
+    return <ErrorAdminPage />;
   }
 
   if (isLoading) {
@@ -141,11 +141,18 @@ const EditDataPage = () => {
                 setFormData({ ...formData, category: e.target.value })
               }
             >
-              <option value="Electronics">Electronics</option>
-              <option value="Interior Decorations">Interior Decorations</option>
-              <option value="Bedroom Accessories">Bedroom Accessories</option>
-              <option value="Kitchen Equipments">Kitchen Equipments</option>
-              <option value="Bathroom Equipments">Bathroom Equipments</option>
+              <option value="Tables">Tables</option>
+              <option value="Seating">Seating</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Bedroom & Sleeping Essentials">
+                Bedroom & Sleeping Essentials
+              </option>
+              <option value="Kitchen & Bathroom Equipment">
+                Kitchen & Bathroom Equipment
+              </option>
+              <option value="Electronics & Interior Decorations">
+                Electronics & Interior Decorations
+              </option>
             </select>
           </div>
           <div className="flex md:flex-row flex-col my-3">

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
-const UploadWidgetModel = ({ setModelUrl, modelId }) => {
-  const [modelName, setModelName] = useState("No file chosen");
+const UploadWidgetModel = ({ setModelUrl, modelId = "No file chosen" }) => {
+  const [modelName, setModelName] = useState(modelId);
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 

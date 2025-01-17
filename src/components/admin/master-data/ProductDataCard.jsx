@@ -1,7 +1,4 @@
-import { Environment, OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import React from "react";
-import FeaturedModel from "../home/FeaturedModel";
 import { Edit, Trash2 } from "lucide-react";
 import { formatCardDate } from "../../../utils/getCurrentDate";
 import { Link } from "react-router-dom";
@@ -17,8 +14,6 @@ const ProductDataCard = ({ furniture }) => {
     width,
     height,
     imgUrl,
-    scale,
-    position,
     updatedAt,
   } = furniture;
   const queryClient = useQueryClient();

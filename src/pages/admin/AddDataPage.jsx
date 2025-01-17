@@ -11,7 +11,7 @@ const AddDataPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    category: "Electronics",
+    category: "Tables",
     length: "",
     width: "",
     height: "",
@@ -113,11 +113,18 @@ const AddDataPage = () => {
                 setFormData({ ...formData, category: e.target.value })
               }
             >
-              <option value="Electronics">Electronics</option>
-              <option value="Interior Decorations">Interior Decorations</option>
-              <option value="Bedroom Accessories">Bedroom Accessories</option>
-              <option value="Kitchen Equipments">Kitchen Equipments</option>
-              <option value="Bathroom Equipments">Bathroom Equipments</option>
+              <option value="Tables">Tables</option>
+              <option value="Seating">Seating</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Bedroom & Sleeping Essentials">
+                Bedroom & Sleeping Essentials
+              </option>
+              <option value="Kitchen & Bathroom Equipment">
+                Kitchen & Bathroom Equipment
+              </option>
+              <option value="Electronics & Interior Decorations">
+                Electronics & Interior Decorations
+              </option>
             </select>
           </div>
           <div className="flex md:flex-row flex-col my-3">

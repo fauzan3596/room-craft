@@ -18,7 +18,7 @@ const furnitureSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    fetchFurnireSuccess: (state, action) => {
+    fetchFurnitureSuccess: (state, action) => {
       state.loading = false;
       state.error = null;
       state.furnitures = action.payload;
@@ -29,6 +29,6 @@ const furnitureSlice = createSlice({
 export const {
   fetchFurnitureStart,
   fetchFurnitureFailed,
-  fetchFurnireSuccess,
+  fetchFurnitureSuccess,
 } = furnitureSlice.actions;
 export default furnitureSlice.reducer;

@@ -5,7 +5,7 @@ import { Loading, Navbar } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllFurnitures } from "../services/fetchApi";
 import {
-  fetchFurnireSuccess,
+  fetchFurnitureSuccess,
   fetchFurnitureFailed,
   fetchFurnitureStart,
 } from "../redux/slice/furnitureSlice";
@@ -32,7 +32,7 @@ const AdminLayout = () => {
     if (isFurnituresError) {
       dispatch(fetchFurnitureFailed(furnituresError.message));
     } else if (furnitures) {
-      dispatch(fetchFurnireSuccess(furnitures));
+      dispatch(fetchFurnitureSuccess(furnitures));
     }
   }, [furnitures, isFurnituresError, furnituresError, dispatch]);
 
