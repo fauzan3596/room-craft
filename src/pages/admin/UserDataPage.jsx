@@ -2,7 +2,13 @@ import React from 'react'
 
 const UserDataPage = () => {
   return (
-    <div>UserDataPage</div>
+    <main className="p-5">
+      <div className="breadcrumbs text-xl text-[#14532D]">
+        <ul>
+          <li>User Data</li>
+        </ul>
+      </div>
+    </main>
   )
 }
 

@@ -11,6 +11,7 @@ const FeaturedModel = ({
   ); 
 
   scene.scale.set(scale[0], scale[1], scale[2]);
+  
   return <primitive object={scene} position={position} />;
 };
 

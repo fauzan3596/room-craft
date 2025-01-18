@@ -2,6 +2,7 @@ import {
   addDoc,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -65,12 +66,48 @@ export const fetchAllFurnitures = async () => {
   return data;
 };
 
-  export const addFurnitureToRoom = async ({ roomId, furniture }) => {
-    const roomRef = doc(db, "rooms", roomId);
-    await updateDoc(roomRef, { furnitures: arrayUnion(furniture) });
-  };
+export const fetchFurnitureById = async (id) => {
+  const docRef = doc(db, "furnitures", id);
 
-  export const saveRoomDesign = async ({ roomId, newRoom }) => {
-    const roomRef = doc(db, "rooms", roomId);
-    await updateDoc(roomRef, newRoom);
-  };
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  }
+};
+
+export const updateFurniture = async ({ id, newFurniture }) => {
+  const docRef = doc(db, "furnitures", id)
+  await updateDoc(docRef, newFurniture);
+}
+
+export const deleteFurniture = async (id) => {
+  await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to remove this furniture?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your furniture has been removed.",
+        icon: "success",
+      });
+      const docRef = doc(db, "furnitures", id);
+      await deleteDoc(docRef);
+    }
+  });
+}
+
+export const addFurnitureToRoom = async ({ roomId, furniture }) => {
+  const roomRef = doc(db, "rooms", roomId);
+  await updateDoc(roomRef, { furnitures: arrayUnion(furniture) });
+};
+
+export const saveRoomDesign = async ({ roomId, newRoom }) => {
+  const roomRef = doc(db, "rooms", roomId);
+  await updateDoc(roomRef, newRoom);
+};

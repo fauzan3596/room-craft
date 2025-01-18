@@ -49,3 +49,21 @@ export const greetingIcon = () => {
     return <Moon className="me-3 sm:w-14 sm:h-14 w-10 h-10" />;
   }
 };
+
+export const formatTableDate = (date) => {
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  };
+  return new Date(date).toLocaleDateString("en-US", options);
+};
+
+export const formatCardDate = (date) => {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return new Date(date).toLocaleDateString("en-US", options);
+};

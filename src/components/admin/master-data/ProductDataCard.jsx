@@ -1,20 +1,21 @@
-import { Edit, Trash2 } from "lucide-react";
 import React from "react";
+import { Edit, Trash2 } from "lucide-react";
+import { formatCardDate } from "../../../utils/getCurrentDate";
+import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteFurniture } from "../../../services/fetchApi";
-import { Link } from "react-router-dom";
 
-const FeaturedCard = ({ furniture }) => {
+const ProductDataCard = ({ furniture }) => {
   const {
     id,
     name,
-    description,
+    category,
     length,
     width,
     height,
     imgUrl,
+    updatedAt,
   } = furniture;
-
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
@@ -31,20 +32,20 @@ const FeaturedCard = ({ furniture }) => {
   };
 
   return (
-    <div className="card bg-green-900 bg-opacity-10 shadow-xl">
+    <div className="card bg-green-900 bg-opacity-10 ">
       <figure className="h-48">
-        <img
-          src={`https://res.cloudinary.com/dlnqwafkc/image/upload/v1737115078/${imgUrl}.png`}
-        />
+        <img src={`https://res.cloudinary.com/dlnqwafkc/image/upload/v1737115078/${imgUrl}.png`} />
       </figure>
       <div className="card-body text-[#6D6666]">
-        <h2 className="card-title">
-          {name} <div className="badge badge-error bg-opacity-50">NEW</div>
-        </h2>
-        <p className="line-clamp-2">{description}</p>
+        <h2 className="card-title">{name}</h2>
         <div>
-          <p className="font-medium">Dimensions:</p>
+          <p>{category}</p>
+        </div>
+        <div>
           <p>{`${length}m X ${width}m X ${height}m`}</p>
+        </div>
+        <div>
+          <p>{formatCardDate(updatedAt)}</p>
         </div>
         <div className="card-actions justify-end">
           <button className="p-2 text-green-900 hover:bg-green-900 hover:bg-opacity-30 rounded-full">
@@ -64,4 +65,4 @@ const FeaturedCard = ({ furniture }) => {
   );
 };
 
-export default FeaturedCard;
+export default ProductDataCard;

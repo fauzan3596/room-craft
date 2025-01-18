@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Navbar } from "../components";
+import { Loading, Navbar } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllFurnitures } from "../services/fetchApi";
-import { fetchFurnireSuccess, fetchFurnitureFailed, fetchFurnitureStart } from "../redux/slice/furnitureSlice";
+import {
+  fetchFurnitureSuccess,
+  fetchFurnitureFailed,
+  fetchFurnitureStart,
+} from "../redux/slice/furnitureSlice";
 
 const AdminLayout = () => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(true);
@@ -24,13 +28,13 @@ const AdminLayout = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchFurnitureStart())
+    dispatch(fetchFurnitureStart());
     if (isFurnituresError) {
-      dispatch(fetchFurnitureFailed(furnituresError.message))
+      dispatch(fetchFurnitureFailed(furnituresError.message));
     } else if (furnitures) {
-      dispatch(fetchFurnireSuccess(furnitures))
+      dispatch(fetchFurnitureSuccess(furnitures));
     }
-  }, [furnitures, isFurnituresError, furnituresError, dispatch])
+  }, [furnitures, isFurnituresError, furnituresError, dispatch]);
 
   const displayWindowSize = () => {
     setScreenWidth(window.innerWidth);
@@ -68,7 +72,7 @@ const AdminLayout = () => {
             onClick={() => setIsNavbarOpen(false)}
           ></div>
         )}
-        <Outlet />
+        {isFurnituresLoading ? <Loading /> : <Outlet />}
       </div>
     </div>
   );
