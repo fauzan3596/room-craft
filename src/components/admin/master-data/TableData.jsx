@@ -132,7 +132,7 @@ const TableData = ({
           })}
         </tbody>
       </table>
-      <div className="flex items-center justify-between mt-4">
+      <div className="flex sm:flex-row flex-col sm:items-center justify-between mt-4 gap-4">
         <div className="flex items-center gap-2">
           <p>Rows per page: </p>
           <select
