@@ -11,7 +11,7 @@ import TableData from "./admin/master-data/TableData";
 import CardData from "./admin/master-data/CardData";
 import ProductDataCard from "./admin/master-data/ProductDataCard";
 import CardPagination from "./admin/master-data/CardPagination";
-import RoomCard from "./client/RoomCard";
+import RoomCard from "./client/room/RoomCard";
 
 export {
   Navbar,

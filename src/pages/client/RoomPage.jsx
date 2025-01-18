@@ -6,6 +6,7 @@ import { fetchRoomFailed, fetchRoomStart } from "../../redux/slice/roomSlice";
 import { fetchFurnitureSuccess } from "../../redux/slice/furnitureSlice";
 import { useDispatch } from "react-redux";
 import { Loading, RoomCard } from "../../components";
+import useFilterRooms from "../../hooks/useFilterRooms";
 
 const RoomPage = () => {
   const {
@@ -27,6 +28,17 @@ const RoomPage = () => {
       dispatch(fetchFurnitureSuccess(rooms));
     }
   }, [rooms, isRoomsError, roomsError, dispatch]);
+
+  const { filteredRooms, selectedCategories, setSelectedCategories } =
+    useFilterRooms(rooms);
+
+  const categoryChangeHandler = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category  ]
+    );
+  };
 
   if (isRoomsLoading) {
     return <Loading />;

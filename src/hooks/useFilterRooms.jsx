@@ -1,11 +1,21 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from "react";
 
-const useFilterRooms = () => {
-    const [selectedCategories, setSelectedCategories] = useState([])
-    
-  return (
-    <div>useFilterRooms</div>
-  )
-}
+const useFilterRooms = (rooms) => {
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-export default useFilterRooms
+  const filteredRooms = useMemo(() => {
+    if (!rooms) return [];
+
+    return rooms.filter((room) => {
+      if (selectedCategories.length > 0) {
+        return selectedCategories.includes(room.category);
+      } else {
+        return true;
+      }
+    });
+  }, [rooms, selectedCategories]);
+
+  return { filteredRooms, selectedCategories, setSelectedCategories };
+};
+
+export default useFilterRooms;

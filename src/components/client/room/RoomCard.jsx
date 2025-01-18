@@ -24,8 +24,10 @@ const RoomCard = ({ room }) => {
         />
       </figure>
       <div className="card-body text-[#A1824A]">
-        <h2 className="card-title text-black">{name}</h2>
-        <p>{category}</p>
+        <div>
+          <h2 className="card-title text-black">{name}</h2>
+          <p>{category}</p>
+        </div>
         <div>
           <p>Dimensions:</p>
           <p>
