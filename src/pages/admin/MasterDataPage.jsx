@@ -13,8 +13,14 @@ const MasterDataPage = () => {
   const [itemOffset, setItemOffset] = useState(0);
 
   const filteredFurnitures = furnitures
-    ? Object.values(furnitures).filter((furniture) => {
-        const searchResults = Object.values(furniture)
+    ? furnitures.filter((furniture) => {
+        const searchResults = [
+          furniture.name,
+          furniture.category,
+          furniture.height,
+          furniture.length,
+          furniture.width,
+        ]
           .join(" ")
           .toLowerCase()
           .includes(query.toLowerCase());
