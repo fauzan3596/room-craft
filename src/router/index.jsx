@@ -7,6 +7,7 @@ import {
   ErrorAdminPage,
   LandingPage,
   MasterDataPage,
+  RoomPage,
   UserDataPage,
 } from "../pages";
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
         element: <ErrorAdminPage />,
       },
     ],
+  },
+  {
+    path: "/room",
+    element: <RoomPage />,
   },
 ]);
 

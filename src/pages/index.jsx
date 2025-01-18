@@ -5,6 +5,7 @@ import AddDataPage from "./admin/AddDataPage";
 import LandingPage from "./LandingPage";
 import EditDataPage from "./admin/EditDataPage";
 import ErrorAdminPage from "./admin/ErrorAdminPage";
+import RoomPage from "./client/RoomPage";
 
 export {
   AdminHomePage,
@@ -14,4 +15,5 @@ export {
   LandingPage,
   EditDataPage,
   ErrorAdminPage,
+  RoomPage,
 };
