@@ -51,9 +51,9 @@ const RoomCard = ({ room }) => {
           </div>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-error me-1">Delete</button>{" "}
+          <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-1">Delete</button>{" "}
           <Link to={`/room/detail/${id}`}>
-            <button className="btn bg-green-900 text-white hover:bg-green-600 rounded-btn">
+            <button className="btn bg-[#376A4F] text-white hover:bg-green-900 rounded-btn">
               Explore
             </button>
           </Link>

@@ -7,8 +7,7 @@ const CardCanvas = ({ length, width, height, wallColor }) => {
   return (
     <Canvas
       camera={{
-        position: [0, Number(height) / 2, Number(length) * 1.5],
-        fov: 50,
+        position: [0, height * 1.8, 5],
       }}
     >
       {/* Cahaya */}

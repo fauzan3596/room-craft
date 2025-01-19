@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { roomCategories } from "../../../utils/roomCategory";
 import { Link } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateRoom } from "../../../services/fetchApi";
+import { useDispatch } from "react-redux";
+import { updateRoomState } from "../../../redux/slice/roomSlice";
 
-const EditRoomDetail = ({ room }) => {
+const EditRoomDetail = ({ room, setStep }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -12,6 +15,8 @@ const EditRoomDetail = ({ room }) => {
     width: "",
     height: "",
   });
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (room) {
@@ -27,19 +32,44 @@ const EditRoomDetail = ({ room }) => {
   }, [room]);
 
   const updateMutation = useMutation({
-    // mutationFn: () => 
-  })
+    mutationFn: updateRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["room", room.id],
+      });
+      setStep(2);
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: error,
+      });
+    },
+  });
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const newRoom = {
+      ...room,
+      ...formData,
+      updatedAt: new Date().toISOString(),
+    };
+    // updateMutation.mutate({ id: room.id, newRoom });
+    dispatch(updateRoomState(newRoom));
+    setStep(2);
+  };
 
   return (
     <section>
-      <form className="form-control">
+      <form className="form-control" onSubmit={submitHandler}>
         <div className="label">
           <span className="label-text">Room Name</span>
         </div>
         <input
           type="text"
           placeholder="Master Bedroom"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -50,7 +80,7 @@ const EditRoomDetail = ({ room }) => {
         <textarea
           type="text"
           placeholder="Filled with a serene and spacious space separated from the rest of the house"
-          className="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           required
           value={formData.description}
           onChange={(e) =>
@@ -61,7 +91,7 @@ const EditRoomDetail = ({ room }) => {
           <span className="label-text mt-2">Room Category</span>
         </div>
         <select
-          className="select select-bordered w-full"
+          className="select select-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           value={formData.category}
           onChange={(e) =>
             setFormData({ ...formData, category: e.target.value })
@@ -156,7 +186,7 @@ const EditRoomDetail = ({ room }) => {
         </div>
         <div className="flex justify-end mt-4">
           <Link to="/room">
-            <button className="btn btn-error me-3 w-20">Back</button>
+            <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20">Back</button>
           </Link>
           <button className="btn bg-green-900 w-20 text-white hover:bg-green-600">
             Next

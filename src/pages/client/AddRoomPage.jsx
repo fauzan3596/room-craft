@@ -61,7 +61,7 @@ const AddRoomPage = () => {
         <input
           type="text"
           placeholder="Master Bedroom"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -72,7 +72,7 @@ const AddRoomPage = () => {
         <textarea
           type="text"
           placeholder="Filled with a serene and spacious space separated from the rest of the house"
-          className="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           required
           value={formData.description}
           onChange={(e) =>
@@ -83,7 +83,7 @@ const AddRoomPage = () => {
           <span className="label-text mt-2">Room Category</span>
         </div>
         <select
-          className="select select-bordered w-full"
+          className="select select-bordered w-full bg-[#B3BEB3] bg-opacity-20"
           value={formData.category}
           onChange={(e) =>
             setFormData({ ...formData, category: e.target.value })
@@ -190,7 +190,7 @@ const AddRoomPage = () => {
           <input
             type="text"
             placeholder="#000000"
-            className="input input-bordered"
+            className="input input-bordered bg-[#B3BEB3] bg-opacity-20"
             required
             value={formData.wallColor}
             onChange={(e) =>
@@ -200,7 +200,7 @@ const AddRoomPage = () => {
         </div>
         <div className="flex justify-end mt-4">
           <Link to="/room">
-            <button className="btn btn-error me-3 w-20">Cancel</button>
+            <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20">Cancel</button>
           </Link>
           <button className="btn bg-green-900 w-20 text-white hover:bg-green-600">
             Save

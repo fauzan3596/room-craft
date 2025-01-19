@@ -106,9 +106,9 @@ const RoomPage = () => {
           <div
             className={`badge badge-lg ${
               selectedCategories.includes(category)
-                ? "bg-green-900 bg-opacity-60 text-white hover:bg-green-900 hover:bg-opacity-40"
-                : "bg-[#F5F0E5] hover:bg-[#F9DAD5]"
-            } font-medium py-5 cursor-pointer transition-colors`}
+                ? "bg-green-900 bg-opacity-70 text-white hover:bg-green-900 hover:bg-opacity-10 hover:text-black"
+                : "bg-green-900 bg-opacity-10 text-black hover:bg-green-900 hover:bg-opacity-70 hover:text-white"
+            } font-medium py-5 cursor-pointer transition-all`}
             key={index}
             onClick={() => categoryChangeHandler(category)}
           >
