@@ -2,7 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { AdminLayout } from "../layouts";
 import {
   AddDataPage,
+  AddRoomPage,
   AdminHomePage,
+  DetailRoomPage,
   EditDataPage,
   ErrorAdminPage,
   LandingPage,
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
   {
     path: "/room",
     element: <RoomPage />,
+  },
+  {
+    path: "/room/add-room",
+    element: <AddRoomPage />,
+  },
+  {
+    path: "/room/detail/:id",
+    element: <DetailRoomPage />,
   },
 ]);
 

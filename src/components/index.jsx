@@ -12,6 +12,8 @@ import CardData from "./admin/master-data/CardData";
 import ProductDataCard from "./admin/master-data/ProductDataCard";
 import CardPagination from "./admin/master-data/CardPagination";
 import RoomCard from "./client/room/RoomCard";
+import CardCanvas from "./client/room/CardCanvas";
+import EditRoomDetail from "./client/room-detail/EditRoomDetail";
 
 export {
   Navbar,
@@ -28,4 +30,6 @@ export {
   ProductDataCard,
   CardPagination,
   RoomCard,
+  CardCanvas,
+  EditRoomDetail,
 };

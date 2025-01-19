@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { roomCategories } from "../../utils/roomCategory";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllRooms } from "../../services/fetchApi";
-import { fetchRoomFailed, fetchRoomStart } from "../../redux/slice/roomSlice";
-import { fetchFurnitureSuccess } from "../../redux/slice/furnitureSlice";
+import {
+  fetchRoomFailed,
+  fetchRoomStart,
+  fetchRoomSuccess,
+} from "../../redux/slice/roomSlice";
 import { useDispatch } from "react-redux";
 import { Loading, RoomCard } from "../../components";
 import useFilterRooms from "../../hooks/useFilterRooms";
+import { Link } from "react-router-dom";
 
 const RoomPage = () => {
   const {
@@ -19,13 +23,14 @@ const RoomPage = () => {
     queryFn: fetchAllRooms,
   });
   const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchRoomStart());
     if (isRoomsError) {
       dispatch(fetchRoomFailed(roomsError.message));
     } else if (rooms) {
-      dispatch(fetchFurnitureSuccess(rooms));
+      dispatch(fetchRoomSuccess(rooms));
     }
   }, [rooms, isRoomsError, roomsError, dispatch]);
 
@@ -36,21 +41,44 @@ const RoomPage = () => {
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((cat) => cat !== category)
-        : [...prev, category  ]
+        : [...prev, category]
     );
   };
+
+  const queryHandler = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const roomsResult = filteredRooms
+    ? filteredRooms.filter((room) => {
+        const searchResults = [
+          room.name,
+          room.category,
+          room.height,
+          room.length,
+          room.width,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(query.toLowerCase());
+
+        return searchResults;
+      })
+    : [];
 
   if (isRoomsLoading) {
     return <Loading />;
   }
 
   return (
-    <main className="min-h-screen w-full px-10 py-10">
+    <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-4xl">Rooms</h1>
-        <button className="btn bg-green-900 text-white hover:bg-green-700 border-0 rounded-badge">
-          Create New Room
-        </button>
+        <h1 className="font-bold text-3xl">Rooms</h1>{" "}
+        <Link to="/room/add-room">
+          <button className="btn bg-green-900 text-white hover:bg-green-700 border-0 rounded-badge">
+            Create New Room
+          </button>
+        </Link>
       </div>
       <label className="input bg-[#F5F0E5] text-[#A1824A] focus-within:outline-none focus-within:border-0 flex items-center gap-2 mt-5">
         <svg
@@ -69,20 +97,27 @@ const RoomPage = () => {
           type="text"
           className="grow placeholder:text-[#A1824A]"
           placeholder="Search rooms.."
+          value={query}
+          onChange={queryHandler}
         />
       </label>
       <div className="flex my-5 gap-3 flex-wrap">
         {roomCategories.map((category, index) => (
           <div
-            className="badge badge-lg bg-[#F5F0E5] font-medium py-5 hover:bg-[#EDE7DA] cursor-pointer"
+            className={`badge badge-lg ${
+              selectedCategories.includes(category)
+                ? "bg-green-900 bg-opacity-60 text-white hover:bg-green-900 hover:bg-opacity-40"
+                : "bg-[#F5F0E5] hover:bg-[#F9DAD5]"
+            } font-medium py-5 cursor-pointer transition-colors`}
             key={index}
+            onClick={() => categoryChangeHandler(category)}
           >
             {category}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 gap-5">
-        {rooms.map((room) => (
+      <div className="grid lg:grid-cols-1 md:grid-cols-2 grid-cols-1 gap-5">
+        {roomsResult.map((room) => (
           <RoomCard key={room.id} room={room} />
         ))}
       </div>

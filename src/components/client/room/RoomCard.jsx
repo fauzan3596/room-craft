@@ -1,7 +1,10 @@
 import React from "react";
+import CardModel from "./CardCanvas";
+import { Link } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
-  const { name, category, length, width, height, furnitures } = room;
+  const { id, name, category, length, width, height, furnitures, wallColor } =
+    room;
 
   const listFurnitures = new Map();
   furnitures.forEach((furniture) => {
@@ -16,14 +19,16 @@ const RoomCard = ({ room }) => {
   });
 
   return (
-    <section className="card sm:card-side">
-      <figure>
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-          alt="Movie"
+    <section className="card lg:card-side hover:border hover:shadow-xl">
+      <figure className="lg:w-1/4">
+        <CardModel
+          length={length}
+          width={width}
+          height={height}
+          wallColor={wallColor}
         />
       </figure>
-      <div className="card-body text-[#A1824A]">
+      <div className="card-body text-[#A1824A] lg:w-3/4">
         <div>
           <h2 className="card-title text-black">{name}</h2>
           <p>{category}</p>
@@ -35,17 +40,23 @@ const RoomCard = ({ room }) => {
           </p>
         </div>
         <div>
-          <p>Furnitures List:</p>
-          <div className="flex flex-wrap capitalize">
+          Furnitures List:
+          <div className="capitalize line-clamp-2">
+            {listFurnitures.size === 0 && <span>No furniture added yet</span>}
             {Array.from(listFurnitures).map(([furnitureName, count]) => (
-              <div key={furnitureName} className="me-2">
+              <span key={furnitureName} className="me-2">
                 {furnitureName} &times; {count}
-              </div>
+              </span>
             ))}
           </div>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Watch</button>
+          <button className="btn btn-error me-1">Delete</button>{" "}
+          <Link to={`/room/detail/${id}`}>
+            <button className="btn bg-green-900 text-white hover:bg-green-600 rounded-btn">
+              Explore
+            </button>
+          </Link>
         </div>
       </div>
     </section>

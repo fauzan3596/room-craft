@@ -15,7 +15,7 @@ const roomSlice = createSlice({
     fetchRoomSuccess: (state, action) => {
       state.loading = false;
       state.error = null;
-      state.furnitures = action.payload;
+      state.rooms = action.payload;
     },
     fetchRoomFailed: (state, action) => {
       state.loading = false;
