@@ -20,6 +20,7 @@ const FurnitureCardRoom = ({ roomId, furniture }) => {
         addedToRoomAt: new Date().toISOString(),
         scale: [1, 1, 1],
         position: [0, 0, 0],
+        rotation: [0, 0, 0],
       },
     };
     dispatch(addedFurnitureToRoom(furnitureToRoom));
