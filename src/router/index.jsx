@@ -8,13 +8,17 @@ import {
   EditDataPage,
   ErrorAdminPage,
   LandingPage,
+  LoginForm,
   MasterDataPage,
+  RegisterForm,
   RoomPage,
   UserDataPage,
 } from "../pages";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
+  { path: "/login", element: <LoginForm /> },
+  { path: "/register", element: <RegisterForm /> },
   {
     path: "/admin",
     element: <AdminLayout />,

@@ -8,6 +8,8 @@ import ErrorAdminPage from "./admin/ErrorAdminPage";
 import RoomPage from "./client/RoomPage";
 import AddRoomPage from "./client/AddRoomPage";
 import DetailRoomPage from "./client/DetailRoomPage";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 export {
   AdminHomePage,
@@ -20,4 +22,6 @@ export {
   RoomPage,
   AddRoomPage,
   DetailRoomPage,
+  LoginForm,
+  RegisterForm,
 };

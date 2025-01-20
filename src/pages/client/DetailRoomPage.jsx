@@ -10,23 +10,25 @@ const DetailRoomPage = () => {
   const { id } = useParams();
   const { rooms } = useSelector((state) => state.rooms);
   const roomFromRedux = rooms.find((r) => r.id === id);
-  // const {
-  //   data: roomFromQuery,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["room", id],
-  //   queryFn: () => fetchRoomById(id),
-  //   enabled: !roomFromRedux,
-  // });
+  const {
+    data: roomFromQuery,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["room", id],
+    queryFn: () => fetchRoomById(id),
+    enabled: !roomFromRedux,
+  });
 
-  const room = roomFromRedux;
+  const room = roomFromRedux || roomFromQuery;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
-
+  if (isError) {
+    return <p>Error</p>
+  }
   return (
     <main className="min-h-screen w-full lg:px-10 px-5 py-10">
       <h1 className="font-bold text-3xl">
