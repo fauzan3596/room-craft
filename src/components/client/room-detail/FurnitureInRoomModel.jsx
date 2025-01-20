@@ -5,6 +5,7 @@ import { Euler, Vector3 } from "three";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteFurnitureFromRoom,
   fetchRoomSuccess,
   updateFurnitureInRoom,
 } from "../../../redux/slice/roomSlice";
@@ -43,6 +44,15 @@ const FurnitureInRoomModel = ({ furniture, setControlsEnabled, roomId }) => {
       rotation: rotation.toArray().slice(0, 3),
     };
     dispatch(updateFurnitureInRoom({ roomId, updatedFurniture }));
+  };
+
+  const handleDelete = () => {
+    const updatedFurniture = {
+      ...furniture,
+      position: position.toArray(),
+      rotation: rotation.toArray().slice(0, 3),
+    };
+    dispatch(deleteFurnitureFromRoom({ roomId, furniture }));
   };
 
   const handlePointerDown = (e) => {
@@ -86,6 +96,9 @@ const FurnitureInRoomModel = ({ furniture, setControlsEnabled, roomId }) => {
             return prev;
         }
       });
+      if (e.key === "Backspace" || e.key === "Delete") {
+        handleDelete();
+      }
     }
 
     if (rightClick) {

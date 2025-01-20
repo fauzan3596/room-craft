@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CardData, TableData } from "../../components";
@@ -7,10 +7,19 @@ import { Grid, List } from "lucide-react";
 const MasterDataPage = () => {
   const { furnitures } = useSelector((state) => state.furnitures);
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [filter, setFilter] = useState("");
   const [isGrid, setIsGrid] = useState(true);
   const [forcePage, setForcePage] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+
+  useEffect(() => {
+    const debounceHandler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => clearTimeout(debounceHandler);
+  }, [query]);
 
   const filteredFurnitures = furnitures
     ? furnitures.filter((furniture) => {
@@ -23,7 +32,7 @@ const MasterDataPage = () => {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(query.toLowerCase());
+          .includes(debouncedQuery.toLowerCase());
 
         const filterResults = filter ? furniture.category === filter : true;
 

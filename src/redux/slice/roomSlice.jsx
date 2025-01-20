@@ -34,8 +34,8 @@ const roomSlice = createSlice({
           ? {
               ...room,
               furnitures: room.furnitures
-                ? [...room.furnitures, { ...furniture, id: uuidv()}]
-                : [{ ...furniture, id: uuidv }],
+                ? [...room.furnitures, furniture]
+                : [furniture],
             }
           : room
       );
@@ -55,6 +55,19 @@ const roomSlice = createSlice({
           : room
       );
     },
+    deleteFurnitureFromRoom: (state, action) => {
+      const { roomId, furniture } = action.payload;
+      state.rooms = state.rooms.map((room) =>
+        room.id === roomId
+          ? {
+              ...room,
+              furnitures: room.furnitures.filter(
+                (f) => f.id !== furniture.id
+              ),
+            }
+          : room
+      );
+    },
   },
 });
 
@@ -64,6 +77,7 @@ export const {
   fetchRoomFailed,
   updateRoomState,
   addedFurnitureToRoom,
-  updateFurnitureInRoom
+  updateFurnitureInRoom,
+  deleteFurnitureFromRoom,
 } = roomSlice.actions;
 export default roomSlice.reducer;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { roomCategories } from "../../../utils/roomCategory";
 import { Link } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateRoom } from "../../../services/fetchApi";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { updateRoom } from "../../../services/fetchApi";
 import { useDispatch } from "react-redux";
 import { updateRoomState } from "../../../redux/slice/roomSlice";
 
@@ -15,7 +15,7 @@ const EditRoomDetail = ({ room, setStep }) => {
     width: "",
     height: "",
   });
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,22 +31,22 @@ const EditRoomDetail = ({ room, setStep }) => {
     }
   }, [room]);
 
-  const updateMutation = useMutation({
-    mutationFn: updateRoom,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["room", room.id],
-      });
-      setStep(2);
-    },
-    onError: (error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Something went wrong!",
-        text: error,
-      });
-    },
-  });
+  // const updateMutation = useMutation({
+  //   mutationFn: updateRoom,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["room", room.id],
+  //     });
+  //     setStep(2);
+  //   },
+  //   onError: (error) => {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Something went wrong!",
+  //       text: error,
+  //     });
+  //   },
+  // });
 
   const submitHandler = (e) => {
     e.preventDefault();

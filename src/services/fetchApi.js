@@ -102,9 +102,31 @@ export const deleteFurniture = async (id) => {
   });
 }
 
-export const updateRoom = async ({id, newRoom}) => {
-  const docRef = doc(db, "rooms", id);
-  await updateDoc(docRef, newRoom);
+// export const updateRoom = async ({id, newRoom}) => {
+//   const docRef = doc(db, "rooms", id);
+//   await updateDoc(docRef, newRoom);
+// }
+
+export const deleteRoom = async (id) => {
+  await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to remove this room?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your room has been removed.",
+        icon: "success",
+      });
+      const docRef = doc(db, "rooms", id);
+      await deleteDoc(docRef);
+    }
+  });
 }
 
 export const saveRoomDesign = async ({ roomId, currentRoom }) => {

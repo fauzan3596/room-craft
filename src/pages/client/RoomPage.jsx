@@ -24,6 +24,7 @@ const RoomPage = () => {
   });
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchRoomStart());
@@ -45,6 +46,14 @@ const RoomPage = () => {
     );
   };
 
+  useEffect(() => {
+    const debounceHandler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 1000);
+
+    return () => clearTimeout(debounceHandler);
+  }, [query]);
+
   const queryHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -60,7 +69,7 @@ const RoomPage = () => {
         ]
           .join(" ")
           .toLowerCase()
-          .includes(query.toLowerCase());
+          .includes(debouncedQuery.toLowerCase());
 
         return searchResults;
       })
@@ -106,9 +115,9 @@ const RoomPage = () => {
           <div
             className={`badge badge-lg ${
               selectedCategories.includes(category)
-                ? "bg-green-900 bg-opacity-70 text-white hover:bg-green-900 hover:bg-opacity-10 hover:text-black"
-                : "bg-green-900 bg-opacity-10 text-black hover:bg-green-900 hover:bg-opacity-70 hover:text-white"
-            } font-medium py-5 cursor-pointer transition-all`}
+                ? "bg-[#F9DAD5] hover:bg-[#F5F0E5]"
+                : "bg-[#F5F0E5] hover:bg-[#F9DAD5]"
+            } font-medium py-5 cursor-pointer transition-all border-0`}
             key={index}
             onClick={() => categoryChangeHandler(category)}
           >
@@ -117,9 +126,13 @@ const RoomPage = () => {
         ))}
       </div>
       <div className="grid lg:grid-cols-1 md:grid-cols-2 grid-cols-1 gap-5">
-        {roomsResult.map((room) => (
-          <RoomCard key={room.id} room={room} />
-        ))}
+        {roomsResult.length > 0 ? (
+          roomsResult.map((room) => <RoomCard key={room.id} room={room} />)
+        ) : (
+          <p className="text-gray-400 text-center mt-4">
+            There's no rooms found. Please add some rooms first.
+          </p>
+        )}
       </div>
     </main>
   );

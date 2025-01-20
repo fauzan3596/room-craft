@@ -5,6 +5,7 @@ import FurnitureCardModel from "./FurnitureCardModel";
 import CanvasLoader from "./CanvasLoader";
 import { useDispatch } from "react-redux";
 import { addedFurnitureToRoom } from "../../../redux/slice/roomSlice";
+import { v4 as uuidv } from "uuid";
 
 const FurnitureCardRoom = ({ roomId, furniture }) => {
   const { name, modelUrl, scale, position } = furniture;
@@ -15,9 +16,10 @@ const FurnitureCardRoom = ({ roomId, furniture }) => {
       id: roomId,
       furniture: {
         ...furniture,
+        id: uuidv(),
         addedToRoomAt: new Date().toISOString(),
         scale: [1, 1, 1],
-        position: [0, 0, 0]
+        position: [0, 0, 0],
       },
     };
     dispatch(addedFurnitureToRoom(furnitureToRoom));

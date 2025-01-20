@@ -1,6 +1,9 @@
 import React from "react";
 import CardModel from "./CardCanvas";
 import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteRoom } from "../../../services/fetchApi";
+import Swal from "sweetalert2";
 
 const RoomCard = ({ room }) => {
   const { id, name, category, length, width, height, furnitures, wallColor } =
@@ -17,6 +20,28 @@ const RoomCard = ({ room }) => {
       listFurnitures.set(furniture.name, 1);
     }
   });
+
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["rooms"],
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: error.message,
+      });
+    },
+  });
+
+  const deleteHandler = (id) => {
+    deleteMutation.mutate(id);
+  };
 
   return (
     <section className="card lg:card-side hover:border hover:shadow-xl">
@@ -51,7 +76,12 @@ const RoomCard = ({ room }) => {
           </div>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-1">Delete</button>{" "}
+          <button
+            onClick={() => deleteHandler(id)}
+            className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-1"
+          >
+            Delete
+          </button>{" "}
           <Link to={`/room/detail/${id}`}>
             <button className="btn bg-[#376A4F] text-white hover:bg-green-900 rounded-btn">
               Explore

@@ -21,6 +21,7 @@ import FurnitureCardRoom from "./client/room-detail/FurnitureCardRoom";
 import FurnitureCardModel from "./client/room-detail/FurnitureCardModel";
 import CanvasLoader from "./client/room-detail/CanvasLoader";
 import FurnitureInRoomModel from "./client/room-detail/FurnitureInRoomModel";
+import FurnitureRoomModel from "./client/room/FurnitureRoomModel";
 
 export {
   Navbar,
@@ -46,4 +47,5 @@ export {
   FurnitureCardModel,
   CanvasLoader,
   FurnitureInRoomModel,
+  FurnitureRoomModel,
 };
