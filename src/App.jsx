@@ -3,6 +3,7 @@ import router from "./router";
 import "./App.css";
 import { useQuery } from "@tanstack/react-query";
 import {
+  fetchAllFavoriteFurnitures,
   fetchAllFavoriteRooms,
   fetchAllFurnitures,
   fetchAllRooms,
@@ -24,6 +25,7 @@ import {
   fetchFavoriteRoomStart,
   fetchFavoriteRoomSuccess,
 } from "./redux/slice/favoriteRoomSlice";
+import { fetchFavoriteFurnitureFailed, fetchFavoriteFurnitureStart, fetchFavoriteFurnitureSuccess } from "./redux/slice/favoriteFurnitureSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,6 +85,25 @@ function App() {
       dispatch(fetchFavoriteRoomSuccess(favoriteRooms));
     }
   }, [favoriteRooms, isfavoriteRoomsError, favoriteRoomsError, dispatch]);
+
+  const {
+    data: favoriteFurnitures,
+    isLoading: isfavoriteFurnituresLoading,
+    isError: isfavoriteFurnituresError,
+    error: favoriteFurnituresError,
+  } = useQuery({
+    queryKey: ["favoriteFurnitures"],
+    queryFn: fetchAllFavoriteFurnitures,
+  });
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFurnitureStart());
+    if (isfavoriteFurnituresError) {
+      dispatch(fetchFavoriteFurnitureFailed(favoriteFurnituresError.message));
+    } else if (favoriteFurnitures) {
+      dispatch(fetchFavoriteFurnitureSuccess(favoriteFurnitures));
+    }
+  }, [favoriteFurnitures, isfavoriteFurnituresError, favoriteFurnituresError, dispatch]);
 
   return (
     <>

@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveRoomDesign } from "../../../services/fetchApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import FavoriteFurnitureList from "./FavoriteFurnitureList";
 
 const AddFurnitureToRoom = ({ room, setStep }) => {
   const { id: roomId } = room;
@@ -69,7 +70,7 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          Tab content 2
+          <FavoriteFurnitureList roomId={roomId} />
         </div>
       </div>
       <h2 className="mt-4 text-center font-semibold text-2xl">

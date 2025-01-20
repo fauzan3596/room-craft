@@ -10,9 +10,10 @@ const FurnitureCardModel = ({
     `https://res.cloudinary.com/dlnqwafkc/image/upload/v1736614683/${modelUrl}.glb`
   );
 
-  scene.scale.set(scale[0], scale[1], scale[2]);
+  const clonedScene = scene.clone();
+  clonedScene.scale.set(scale[0], scale[1], scale[2]);
 
-  return <primitive object={scene} position={position} />;
+  return <primitive object={clonedScene} position={position} />;
 };
 
 export default FurnitureCardModel;

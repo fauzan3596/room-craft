@@ -157,3 +157,13 @@ export const fetchAllFavoriteRooms = async () => {
   return data;
 };
 
+export const fetchAllFavoriteFurnitures = async () => {
+  const favoriteFurnitureRef = collection(db, "favorites");
+  let data = [];
+  const querySnapshot = await getDocs(favoriteFurnitureRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
