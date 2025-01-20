@@ -1,11 +1,12 @@
 import React from "react";
-import LandingPage from "./pages/LandingPage";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRouter from "../src/router/index";
 
 function App() {
   return (
-    <>
-      <LandingPage />
-    </>
+    <Router>
+      <AppRouter />
+    </Router>
   );
 }
 
