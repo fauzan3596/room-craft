@@ -60,7 +60,6 @@ const AdminLayout = () => {
   return (
     <div className="flex">
       <Navbar isNavbarOpen={isNavbarOpen} setIsNavbarOpen={setIsNavbarOpen} />
-
       <div
         className={`${
           isNavbarOpen && "lg:ps-64 ps-20"

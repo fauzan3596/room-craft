@@ -7,6 +7,7 @@ import asset3 from "../assets/asset.3.jpg";
 import asset4 from "../assets/asset.4.jpg";
 import asset5 from "../assets/asset.5.jpg";
 import furnitureImage from "../assets/asset.6.jpg";
+import Navbar from "../components/Navbar";
 import livingRoomImage from "../assets/asset.7.jpg";
 
 const products = [
@@ -39,6 +40,7 @@ const products = [
 const LandingPage = () => {
   return (
     <MainLayout>
+      <Navbar />
       {/* Hero Section */}
       <HeroBanner />
 

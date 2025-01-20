@@ -22,7 +22,7 @@ const TableData = ({
   const queryClient = useQueryClient();
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const endOffset = itemOffset + itemsPerPage;
+  const endOffset = Number(itemOffset) + Number(itemsPerPage);
   const currentFurnitures =
     itemsPerPage === "All"
       ? furnitures
@@ -40,11 +40,11 @@ const TableData = ({
       return;
     } else if (type === "next") {
       if (forcePage === pageCount - 1 || pageCount === 0) return;
-      setItemOffset(Number(itemOffset + itemsPerPage));
+      setItemOffset(Number(itemOffset + Number(itemsPerPage)));
       setForcePage(forcePage + 1);
     } else if (type === "prev") {
       if (forcePage === 0 || pageCount === 0) return;
-      setItemOffset(Number(itemOffset - itemsPerPage));
+      setItemOffset(Number(itemOffset - Number(itemsPerPage)));
       setForcePage(forcePage - 1);
     } else if (type === "first") {
       if (forcePage === 0 || pageCount === 0) return;

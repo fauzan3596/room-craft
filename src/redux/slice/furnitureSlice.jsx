@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const furnitureSlice = createSlice({
   name: "furnitures",
   initialState: {

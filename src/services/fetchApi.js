@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -102,12 +103,67 @@ export const deleteFurniture = async (id) => {
   });
 }
 
-export const addFurnitureToRoom = async ({ roomId, furniture }) => {
+// export const updateRoom = async ({id, newRoom}) => {
+//   const docRef = doc(db, "rooms", id);
+//   await updateDoc(docRef, newRoom);
+// }
+
+export const deleteRoom = async (id) => {
+  await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to remove this room?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your room has been removed.",
+        icon: "success",
+      });
+      const docRef = doc(db, "rooms", id);
+      await deleteDoc(docRef);
+    }
+  });
+}
+
+export const saveRoomDesign = async ({ roomId, currentRoom }) => {
   const roomRef = doc(db, "rooms", roomId);
-  await updateDoc(roomRef, { furnitures: arrayUnion(furniture) });
+  await updateDoc(roomRef, currentRoom);
 };
 
-export const saveRoomDesign = async ({ roomId, newRoom }) => {
-  const roomRef = doc(db, "rooms", roomId);
-  await updateDoc(roomRef, newRoom);
+export const addRoomToFavorites = async (room) => {
+  const docRef = doc(db, "favoriteRooms", room.id)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    await deleteDoc(docRef);
+  } else {
+    await setDoc(docRef, room)
+  }
+}
+
+export const fetchAllFavoriteRooms = async () => {
+  const favoriteRoomRef = collection(db, "favoriteRooms");
+  let data = [];
+  const querySnapshot = await getDocs(favoriteRoomRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
+
+export const fetchAllFavoriteFurnitures = async () => {
+  const favoriteFurnitureRef = collection(db, "favorites");
+  let data = [];
+  const querySnapshot = await getDocs(favoriteFurnitureRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
 };

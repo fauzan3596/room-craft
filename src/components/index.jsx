@@ -11,6 +11,20 @@ import TableData from "./admin/master-data/TableData";
 import CardData from "./admin/master-data/CardData";
 import ProductDataCard from "./admin/master-data/ProductDataCard";
 import CardPagination from "./admin/master-data/CardPagination";
+import RoomCard from "./client/room/RoomCard";
+import CardCanvas from "./client/room/CardCanvas";
+import EditRoomDetail from "./client/room-detail/EditRoomDetail";
+import AddFurnitureToRoom from "./client/room-detail/AddFurnitureToRoom";
+import RoomDesign from "./client/room-detail/RoomDesign";
+import AllFurnitureList from "./client/room-detail/AllFurnitureList";
+import FurnitureCardRoom from "./client/room-detail/FurnitureCardRoom";
+import FurnitureCardModel from "./client/room-detail/FurnitureCardModel";
+import CanvasLoader from "./client/room-detail/CanvasLoader";
+import FurnitureInRoomModel from "./client/room-detail/FurnitureInRoomModel";
+import FurnitureRoomModel from "./client/room/FurnitureRoomModel";
+import FavoriteFurnitureList from "./client/room-detail/FavoriteFurnitureList";
+import AllRooms from "./client/room/AllRooms";
+import FavoriteRooms from "./client/room/FavoriteRooms";
 
 export {
   Navbar,
@@ -26,4 +40,18 @@ export {
   CardData,
   ProductDataCard,
   CardPagination,
+  RoomCard,
+  CardCanvas,
+  EditRoomDetail,
+  AddFurnitureToRoom,
+  RoomDesign,
+  AllFurnitureList,
+  FurnitureCardRoom,
+  FurnitureCardModel,
+  CanvasLoader,
+  FurnitureInRoomModel,
+  FurnitureRoomModel,
+  FavoriteFurnitureList,
+  AllRooms,
+  FavoriteRooms,
 };
