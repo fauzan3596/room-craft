@@ -14,7 +14,6 @@ const FurnitureInRoomModel = ({ furniture, setControlsEnabled, roomId }) => {
   const { scene } = useGLTF(
     `https://res.cloudinary.com/dlnqwafkc/image/upload/v1736614683/${furniture.modelUrl}.glb`
   );
-  const ref = useRef(null);
   const { gl } = useThree();
   const [leftClik, setLeftClik] = useState(false);
   const [rightClick, setRightClick] = useState(false);
@@ -47,11 +46,6 @@ const FurnitureInRoomModel = ({ furniture, setControlsEnabled, roomId }) => {
   };
 
   const handleDelete = () => {
-    const updatedFurniture = {
-      ...furniture,
-      position: position.toArray(),
-      rotation: rotation.toArray().slice(0, 3),
-    };
     dispatch(deleteFurnitureFromRoom({ roomId, furniture }));
   };
 
@@ -151,7 +145,6 @@ const FurnitureInRoomModel = ({ furniture, setControlsEnabled, roomId }) => {
   return (
     <primitive
       object={clonedScene}
-      ref={ref}
       position={position.toArray()}
       rotation={rotation.toArray()}
       onPointerDown={handlePointerDown}

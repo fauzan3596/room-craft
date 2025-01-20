@@ -1,13 +1,14 @@
-import { Plane, Sky } from "@react-three/drei";
+import { OrbitControls, Plane, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import React from "react";
+import FurnitureRoomModel from "./FurnitureRoomModel";
 
-const CardCanvas = ({ length, width, height, wallColor }) => {
+const CardCanvas = ({ length, width, height, wallColor, furnitures }) => {
   return (
     <Canvas
       camera={{
-        position: [0, height * 1.8, 5],
+        position: [0, height * 1.5, length],
       }}
     >
       {/* Cahaya */}
@@ -131,17 +132,14 @@ const CardCanvas = ({ length, width, height, wallColor }) => {
         />
       </mesh>
 
-      {/* {furnitures.map((furniture, index) => {
-                         return (
-                           <Model
-                             key={index}
-                             furniture={furniture}
-                             setFurnitures={setFurnitures}
-                             setControlsEnabled={setControlsEnabled}
-                           />
-                         );
-                       })} */}
-      {/* <OrbitControls enabled={false} /> */}
+      {furnitures.map((furniture, index) => {
+        return <FurnitureRoomModel key={index} furniture={furniture} />;
+      })}
+      <OrbitControls
+        enableZoom={false}
+        maxPolarAngle={0.5}
+        minPolarAngle={0.5}
+      />
     </Canvas>
   );
 };

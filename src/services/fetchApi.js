@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -133,3 +134,26 @@ export const saveRoomDesign = async ({ roomId, currentRoom }) => {
   const roomRef = doc(db, "rooms", roomId);
   await updateDoc(roomRef, currentRoom);
 };
+
+export const addRoomToFavorites = async (room) => {
+  const docRef = doc(db, "favoriteRooms", room.id)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    await deleteDoc(docRef);
+  } else {
+    await setDoc(docRef, room)
+  }
+}
+
+export const fetchAllFavoriteRooms = async () => {
+  const favoriteRoomRef = collection(db, "favoriteRooms");
+  let data = [];
+  const querySnapshot = await getDocs(favoriteRoomRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
+

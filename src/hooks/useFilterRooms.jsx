@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 
-const useFilterRooms = (rooms) => {
+const useFilterRooms = (rooms, favoriteRooms) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const filteredRooms = useMemo(() => {
@@ -15,7 +15,19 @@ const useFilterRooms = (rooms) => {
     });
   }, [rooms, selectedCategories]);
 
-  return { filteredRooms, selectedCategories, setSelectedCategories };
+  const filteredFavoriteRooms = useMemo(() => {
+    if (!favoriteRooms) return [];
+
+    return favoriteRooms.filter((room) => {
+      if (selectedCategories.length > 0) {
+        return selectedCategories.includes(room.category);
+      } else {
+        return true;
+      }
+    });
+  }, [favoriteRooms, selectedCategories]);
+
+  return { filteredRooms, filteredFavoriteRooms, selectedCategories, setSelectedCategories };
 };
 
 export default useFilterRooms;

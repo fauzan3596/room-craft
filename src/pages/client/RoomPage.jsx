@@ -7,8 +7,8 @@ import {
   fetchRoomStart,
   fetchRoomSuccess,
 } from "../../redux/slice/roomSlice";
-import { useDispatch } from "react-redux";
-import { Loading, RoomCard } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { AllRooms, FavoriteRooms, Loading, RoomCard } from "../../components";
 import useFilterRooms from "../../hooks/useFilterRooms";
 import { Link } from "react-router-dom";
 
@@ -25,6 +25,7 @@ const RoomPage = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const { favoriteRooms } = useSelector((state) => state.favoriteRooms);
 
   useEffect(() => {
     dispatch(fetchRoomStart());
@@ -35,8 +36,12 @@ const RoomPage = () => {
     }
   }, [rooms, isRoomsError, roomsError, dispatch]);
 
-  const { filteredRooms, selectedCategories, setSelectedCategories } =
-    useFilterRooms(rooms);
+  const {
+    filteredRooms,
+    filteredFavoriteRooms,
+    selectedCategories,
+    setSelectedCategories,
+  } = useFilterRooms(rooms, favoriteRooms);
 
   const categoryChangeHandler = (category) => {
     setSelectedCategories((prev) =>
@@ -49,7 +54,7 @@ const RoomPage = () => {
   useEffect(() => {
     const debounceHandler = setTimeout(() => {
       setDebouncedQuery(query);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(debounceHandler);
   }, [query]);
@@ -60,6 +65,23 @@ const RoomPage = () => {
 
   const roomsResult = filteredRooms
     ? filteredRooms.filter((room) => {
+        const searchResults = [
+          room.name,
+          room.category,
+          room.height,
+          room.length,
+          room.width,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(debouncedQuery.toLowerCase());
+
+        return searchResults;
+      })
+    : [];
+
+  const favoriteRoomsResult = filteredFavoriteRooms
+    ? filteredFavoriteRooms.filter((room) => {
         const searchResults = [
           room.name,
           room.category,
@@ -125,14 +147,35 @@ const RoomPage = () => {
           </div>
         ))}
       </div>
-      <div className="grid lg:grid-cols-1 md:grid-cols-2 grid-cols-1 gap-5">
-        {roomsResult.length > 0 ? (
-          roomsResult.map((room) => <RoomCard key={room.id} room={room} />)
-        ) : (
-          <p className="text-gray-400 text-center mt-4">
-            There's no rooms found. Please add some rooms first.
-          </p>
-        )}
+      <div role="tablist" className="tabs tabs-lifted">
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className="tab min-w-40"
+          aria-label="All Rooms"
+          defaultChecked
+        />
+        <div
+          role="tabpanel"
+          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+        >
+          <AllRooms roomsResult={roomsResult} />
+        </div>
+
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className="tab min-w-40"
+          aria-label="Favorite Rooms"
+        />
+        <div
+          role="tabpanel"
+          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+        >
+          <FavoriteRooms favoriteRooms={favoriteRoomsResult} />
+        </div>
       </div>
     </main>
   );

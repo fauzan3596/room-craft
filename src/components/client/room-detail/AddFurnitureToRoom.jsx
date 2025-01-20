@@ -33,12 +33,12 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
         title: "Error Saving Your Design",
         text: error.response?.data?.message || "Something went wrong!",
       });
-    }
+    },
   });
 
   const onSaveHandler = (roomId) => {
-    updateMutation.mutate({roomId, currentRoom})
-  }
+    updateMutation.mutate({ roomId, currentRoom });
+  };
 
   return (
     <section>
@@ -76,12 +76,20 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
         Your Room Design
       </h2>
       <RoomDesign room={room} />
-      <button className="btn mt-4" onClick={() => setStep(1)}>
-        Back
-      </button>
-      <button className="btn mt-4" onClick={() => onSaveHandler(roomId)}>
-        Save
-      </button>
+      <div className="flex justify-end mt-4">
+        <button
+          className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20"
+          onClick={() => setStep(1)}
+        >
+          Back
+        </button>
+        <button
+          className="btn bg-green-900 w-20 text-white hover:bg-green-600"
+          onClick={() => onSaveHandler(roomId)}
+        >
+          Save
+        </button>
+      </div>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchRoomById } from "../../services/fetchApi";
 import { AddFurnitureToRoom, EditRoomDetail } from "../../components";
@@ -22,6 +22,10 @@ const DetailRoomPage = () => {
   // });
 
   const room = roomFromRedux;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
 
   return (
     <main className="min-h-screen w-full lg:px-10 px-5 py-10">
