@@ -3,7 +3,7 @@ import RoomDesign from "./RoomDesign";
 import AllFurnitureList from "./AllFurnitureList";
 import { useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { saveRoomDesign } from "../../../services/fetchApi";
+import { saveRoomDesign, updateFavoriteRoom } from "../../../services/fetchApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import FavoriteFurnitureList from "./FavoriteFurnitureList";
@@ -12,6 +12,8 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
   const { id: roomId } = room;
   const { rooms } = useSelector((state) => state.rooms);
   const currentRoom = rooms.find((r) => r.id === roomId);
+  const { favoriteRooms } = useSelector((state) => state.favoriteRooms);
+  const currentFavoriteRoom = favoriteRooms.find((r) => r.id === roomId);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [itemOffset, setItemOffset] = useState(0);
@@ -23,10 +25,18 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
   };
 
   const updateMutation = useMutation({
-    mutationFn: saveRoomDesign,
+    mutationFn: async (updatedRoom) => {
+      await saveRoomDesign(updatedRoom);
+      if (currentFavoriteRoom) {
+        await updateFavoriteRoom(updatedRoom);
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["rooms"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["favoriteRooms"],
       });
       Swal.fire({
         icon: "success",
@@ -39,13 +49,14 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
       Swal.fire({
         icon: "error",
         title: "Error Saving Your Design",
-        text: error.response?.data?.message || "Something went wrong!",
+        text: "Something went wrong!",
       });
     },
   });
 
-  const onSaveHandler = (roomId) => {
-    updateMutation.mutate({ roomId, currentRoom });
+  const onSaveHandler = () => {
+    const updatedRoom = { ...currentRoom };
+    updateMutation.mutate(updatedRoom);
   };
 
   return (
@@ -107,7 +118,7 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
         </button>
         <button
           className="btn bg-green-900 w-20 text-white hover:bg-green-600"
-          onClick={() => onSaveHandler(roomId)}
+          onClick={onSaveHandler}
         >
           Save
         </button>
