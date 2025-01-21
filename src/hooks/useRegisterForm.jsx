@@ -7,7 +7,6 @@ const useRegisterForm = (onRegisterSuccess, openErrorModal, openSuccessModal) =>
     firstName: "",
     email: "",
     password: "",
-    role: "user",
   });
   const [error, setError] = useState("");
 
@@ -17,7 +16,7 @@ const useRegisterForm = (onRegisterSuccess, openErrorModal, openSuccessModal) =>
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, email, password, role } = formData;
+    const { firstName, email, password } = formData;
 
     if (firstName && email && password) {
       createUserWithEmailAndPassword(auth, email, password)
@@ -26,7 +25,6 @@ const useRegisterForm = (onRegisterSuccess, openErrorModal, openSuccessModal) =>
             uid: userCredential.user.uid,
             email,
             firstName,
-            role,
           });
           setError("");
           openSuccessModal();
