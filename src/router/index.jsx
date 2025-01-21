@@ -7,6 +7,8 @@ import {
   DetailRoomPage,
   EditDataPage,
   ErrorAdminPage,
+  FurnitureDetail,
+  FurniturePage,
   LandingPage,
   LoginForm,
   MasterDataPage,
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
     path: "/room/template-room",
     element: <TemplateRoomPage />,
   },
+  {
+    path: "/furniture",
+    element: <FurniturePage />
+  },
+  {
+    path: "/furniture/:id",
+    element: <FurnitureDetail />
+  }
 ]);
 
 export default router;

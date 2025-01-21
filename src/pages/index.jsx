@@ -12,6 +12,8 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import TemplateRoomPage from "./client/TemplateRoomPage";
 import ErrorPage from "./ErrorPage";
+import FurniturePage from "./furniturePage";
+import FurnitureDetail from "./furnitureDetailPage";
 
 export {
   AdminHomePage,
@@ -28,4 +30,6 @@ export {
   RegisterForm,
   TemplateRoomPage,
   ErrorPage,
+  FurniturePage,
+  FurnitureDetail,
 };
