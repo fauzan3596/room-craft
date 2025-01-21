@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 const RoomPage = () => {
   const {
     data: rooms,
-    isLoading: isRoomsLoading,
     isError: isRoomsError,
     error: roomsError,
   } = useQuery({
@@ -96,10 +95,6 @@ const RoomPage = () => {
         return searchResults;
       })
     : [];
-
-  if (isRoomsLoading) {
-    return <Loading />;
-  }
 
   return (
     <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">

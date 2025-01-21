@@ -1,34 +1,36 @@
 import { OrbitControls, Plane, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import * as THREE from "three";
 import FurnitureInRoomModel from "./FurnitureInRoomModel";
 import { useDispatch } from "react-redux";
 import { updateRoomState } from "../../../redux/slice/roomSlice";
+import { Camera } from "lucide-react";
 
 const RoomDesign = ({ room }) => {
-  const {
-    id: roomId,
-    length,
-    width,
-    height,
-    wallColor,
-    furnitures
-  } = room;
+  const { id: roomId, length, width, height, wallColor, furnitures } = room;
   const [controlsEnabled, setControlsEnabled] = useState(true);
   const [currentWallColor, setCurrentWallColor] = useState(wallColor);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const canvasRef = useRef();
+  const [image, setImage] = useState(null);
+
+  const handleScreenshot = () => {
+    const canvas = canvasRef.current;
+    const image = canvas.toDataURL("image/png");
+    setImage(image);
+  };
 
   const colorChangeHandler = (e) => {
-    setCurrentWallColor(e.target.value)
+    setCurrentWallColor(e.target.value);
 
     const newRoom = {
       ...room,
-      wallColor: currentWallColor
-    }
+      wallColor: currentWallColor,
+    };
 
-    dispatch(updateRoomState(newRoom))
-  }
+    dispatch(updateRoomState(newRoom));
+  };
 
   return (
     <section className="mt-4">
@@ -41,8 +43,10 @@ const RoomDesign = ({ room }) => {
       </div>
       <div className="h-screen mt-4 drop-shadow-xl">
         <Canvas
+          ref={canvasRef}
           camera={{ position: [0, height / 2, length * 1.5], fov: 50 }}
           className="rounded-3xl mt-4"
+          gl={{ preserveDrawingBuffer: true }}
         >
           {/* Cahaya */}
           <ambientLight intensity={0.5} />
@@ -56,14 +60,14 @@ const RoomDesign = ({ room }) => {
           >
             <meshPhysicalMaterial
               transparent={true}
-              opacity={0.3} 
-              color={currentWallColor} 
-              reflectivity={0.7} 
-              ior={1.45} 
-              roughness={0.1} 
-              clearcoat={1} 
-              clearcoatRoughness={0} 
-              side={THREE.DoubleSide} 
+              opacity={0.3}
+              color={currentWallColor}
+              reflectivity={0.7}
+              ior={1.45}
+              roughness={0.1}
+              clearcoat={1}
+              clearcoatRoughness={0}
+              side={THREE.DoubleSide}
             />
           </Plane>
           <Sky
@@ -81,14 +85,14 @@ const RoomDesign = ({ room }) => {
           >
             <meshPhysicalMaterial
               transparent={true}
-              opacity={0.3} 
-              color={currentWallColor} 
-              reflectivity={0.7} 
-              ior={1.45} 
-              roughness={0.1} 
-              clearcoat={1} 
-              clearcoatRoughness={0} 
-              side={THREE.DoubleSide} 
+              opacity={0.3}
+              color={currentWallColor}
+              reflectivity={0.7}
+              ior={1.45}
+              roughness={0.1}
+              clearcoat={1}
+              clearcoatRoughness={0}
+              side={THREE.DoubleSide}
             />
           </Plane>
 
@@ -104,7 +108,7 @@ const RoomDesign = ({ room }) => {
               clearcoat={1}
               clearcoatRoughness={0}
               color={currentWallColor}
-              side={THREE.BackSide} 
+              side={THREE.BackSide}
             />
           </mesh>
 
@@ -120,7 +124,7 @@ const RoomDesign = ({ room }) => {
               clearcoat={1}
               clearcoatRoughness={0}
               color={currentWallColor}
-              side={THREE.BackSide} 
+              side={THREE.BackSide}
             />
           </mesh>
 
@@ -158,7 +162,7 @@ const RoomDesign = ({ room }) => {
               clearcoat={1}
               clearcoatRoughness={0}
               color={currentWallColor}
-              side={THREE.BackSide} 
+              side={THREE.BackSide}
             />
           </mesh>
 
@@ -176,6 +180,14 @@ const RoomDesign = ({ room }) => {
           })}
           <OrbitControls enabled={controlsEnabled} />
         </Canvas>
+        <button
+          onClick={handleScreenshot}
+          className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-xl hover:bg-gray-500 hover:text-white"
+        >
+          <a href={image} download="screenshot.png">
+            <Camera className="h-8 w-8 " />
+          </a>
+        </button>
       </div>
     </section>
   );
