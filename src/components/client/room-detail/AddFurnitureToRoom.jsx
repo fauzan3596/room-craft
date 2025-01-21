@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import RoomDesign from "./RoomDesign";
 import AllFurnitureList from "./AllFurnitureList";
 import { useSelector } from "react-redux";
@@ -14,6 +14,13 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
   const currentRoom = rooms.find((r) => r.id === roomId);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [itemOffset, setItemOffset] = useState(0);
+  const [forcePage, setForcePage] = useState(0);
+
+  const tabHandler = () => {
+    setItemOffset(0);
+    setForcePage(0);
+  };
 
   const updateMutation = useMutation({
     mutationFn: saveRoomDesign,
@@ -51,12 +58,19 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
           className="tab min-w-40"
           aria-label="All Furnitures"
           defaultChecked
+          onClick={tabHandler}
         />
         <div
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          <AllFurnitureList roomId={roomId} />
+          <AllFurnitureList
+            roomId={roomId}
+            itemOffset={itemOffset}
+            setItemOffset={setItemOffset}
+            forcePage={forcePage}
+            setForcePage={setForcePage}
+          />
         </div>
 
         <input
@@ -65,12 +79,19 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
           role="tab"
           className="tab min-w-40"
           aria-label="Favorite Furnitures"
+          onClick={tabHandler}
         />
         <div
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          <FavoriteFurnitureList roomId={roomId} />
+          <FavoriteFurnitureList
+            roomId={roomId}
+            itemOffset={itemOffset}
+            setItemOffset={setItemOffset}
+            forcePage={forcePage}
+            setForcePage={setForcePage}
+          />
         </div>
       </div>
       <h2 className="mt-4 text-center font-semibold text-2xl">

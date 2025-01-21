@@ -10,6 +10,8 @@ import AddRoomPage from "./client/AddRoomPage";
 import DetailRoomPage from "./client/DetailRoomPage";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import TemplateRoomPage from "./client/TemplateRoomPage";
+import ErrorPage from "./ErrorPage";
 
 export {
   AdminHomePage,
@@ -24,4 +26,6 @@ export {
   DetailRoomPage,
   LoginForm,
   RegisterForm,
+  TemplateRoomPage,
+  ErrorPage,
 };

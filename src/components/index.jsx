@@ -25,6 +25,7 @@ import FurnitureRoomModel from "./client/room/FurnitureRoomModel";
 import FavoriteFurnitureList from "./client/room-detail/FavoriteFurnitureList";
 import AllRooms from "./client/room/AllRooms";
 import FavoriteRooms from "./client/room/FavoriteRooms";
+import RoomTemplateCard from "./client/room-template/RoomTemplateCard";
 
 export {
   Navbar,
@@ -54,4 +55,5 @@ export {
   FavoriteFurnitureList,
   AllRooms,
   FavoriteRooms,
+  RoomTemplateCard
 };

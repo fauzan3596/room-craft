@@ -100,7 +100,13 @@ const TableData = ({
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="sm:avatar hidden">
-                      <div className="mask mask-squircle h-12 w-12 bg-black">
+                      <div
+                        className="mask mask-squircle h-12 w-12"
+                        style={{
+                          background:
+                            "radial-gradient(circle, rgba(150,150,150,1) 0%, rgba(0,0,0,1) 100%)",
+                        }}
+                      >
                         <img
                           src={`https://res.cloudinary.com/dlnqwafkc/image/upload/v1737115078/${imgUrl}.png`}
                         />

@@ -15,13 +15,6 @@ import Swal from "sweetalert2";
 export const addRoom = async (roomData) => {
   const roomRef = collection(db, "rooms");
   const docRef = await addDoc(roomRef, roomData);
-  if (docRef) {
-    Swal.fire({
-      title: "Success",
-      text: "New room added successfully",
-      icon: "success",
-    });
-  }
 };
 
 export const fetchAllRooms = async () => {
@@ -166,4 +159,20 @@ export const fetchAllFavoriteFurnitures = async () => {
   });
 
   return data;
+};
+
+export const fetchRoomTemplates = async () => {
+  const docRef = collection(db, "roomTemplates");
+  let data = [];
+  const querySnapshot = await getDocs(docRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
+
+export const addTemplate = async (roomData) => {
+  const docRef = doc(db, "rooms", roomData.id)
+  await setDoc(docRef, roomData)
 };

@@ -12,6 +12,7 @@ import {
   MasterDataPage,
   RegisterForm,
   RoomPage,
+  TemplateRoomPage,
   UserDataPage,
 } from "../pages";
 
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "/room/detail/:id",
     element: <DetailRoomPage />,
+  },
+  {
+    path: "/room/template-room",
+    element: <TemplateRoomPage />,
   },
 ]);
 
