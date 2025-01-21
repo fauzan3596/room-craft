@@ -7,6 +7,7 @@ import {
   DetailRoomPage,
   EditDataPage,
   ErrorAdminPage,
+  ErrorPage,
   FurnitureDetail,
   FurniturePage,
   LandingPage,
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     element: <UserLayout />,
     children: [
       {
+        path: "*",
+        element: <ErrorPage />,
+      },
+      {
         path: "room",
         element: <RoomPage />,
       },
@@ -82,6 +87,10 @@ const router = createBrowserRouter([
         element: <FurnitureDetail />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

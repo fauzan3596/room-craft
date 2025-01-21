@@ -125,7 +125,7 @@ const RoomCard = ({ room }) => {
           >
             Delete
           </button>{" "}
-          <Link to={`/room/detail/${id}`}>
+          <Link to={`/user/room/detail/${id}`}>
             <button className="btn bg-[#376A4F] text-white hover:bg-green-900 rounded-btn">
               Explore
             </button>
