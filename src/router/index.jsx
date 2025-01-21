@@ -17,6 +17,7 @@ import {
   TemplateRoomPage,
   UserDataPage,
 } from "../pages";
+import UserLayout from "../layouts/userLayout";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -27,23 +28,23 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin",
+        path: "",
         element: <AdminHomePage />,
       },
       {
-        path: "/admin/master-data",
+        path: "master-data",
         element: <MasterDataPage />,
       },
       {
-        path: "/admin/master-data/add",
+        path: "master-data/add",
         element: <AddDataPage />,
       },
       {
-        path: "/admin/user-data",
+        path: "user-data",
         element: <UserDataPage />,
       },
       {
-        path: "/admin/master-data/edit/:id",
+        path: "master-data/edit/:id",
         element: <EditDataPage />,
       },
       {
@@ -53,29 +54,35 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/room",
-    element: <RoomPage />,
+    path: "/user",
+    element: <UserLayout />,
+    children: [
+      {
+        path: "room",
+        element: <RoomPage />,
+      },
+      {
+        path: "room/add-room",
+        element: <AddRoomPage />,
+      },
+      {
+        path: "room/detail/:id",
+        element: <DetailRoomPage />,
+      },
+      {
+        path: "room/template-room",
+        element: <TemplateRoomPage />,
+      },
+      {
+        path: "furniture",
+        element: <FurniturePage />,
+      },
+      {
+        path: "furniture/:id",
+        element: <FurnitureDetail />,
+      },
+    ],
   },
-  {
-    path: "/room/add-room",
-    element: <AddRoomPage />,
-  },
-  {
-    path: "/room/detail/:id",
-    element: <DetailRoomPage />,
-  },
-  {
-    path: "/room/template-room",
-    element: <TemplateRoomPage />,
-  },
-  {
-    path: "/furniture",
-    element: <FurniturePage />
-  },
-  {
-    path: "/furniture/:id",
-    element: <FurnitureDetail />
-  }
 ]);
 
 export default router;
