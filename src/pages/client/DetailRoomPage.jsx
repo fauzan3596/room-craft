@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchRoomById } from "../../services/fetchApi";
 import { AddFurnitureToRoom, EditRoomDetail } from "../../components";
 import { useSelector } from "react-redux";
+import ErrorPage from "../ErrorPage";
 
 const DetailRoomPage = () => {
   const [step, setStep] = useState(1);
@@ -26,9 +27,11 @@ const DetailRoomPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [step]);
+
   if (isError) {
-    return <p>Error</p>
+    return <ErrorPage />
   }
+  
   return (
     <main className="min-h-screen w-full lg:px-10 px-5 py-10">
       <h1 className="font-bold text-3xl">
