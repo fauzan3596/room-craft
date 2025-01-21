@@ -16,7 +16,7 @@ function FurniturePage() {
   const [favorites, setFavorites] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [forcePage, setForcePage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 4;
 
   const endOffset = itemOffset + itemsPerPage;
   const currentFurnitures = filteredFurnitures.slice(itemOffset, endOffset);

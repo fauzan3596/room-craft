@@ -32,7 +32,7 @@ const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
             </span>
           </button>
           <button
-            onClick={() => navigate(`/furniture/${furniture.id}`)}
+            onClick={() => navigate(`/user/furniture/${furniture.id}`)}
             className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-fit"
           >
             <span className="truncate">View</span>
