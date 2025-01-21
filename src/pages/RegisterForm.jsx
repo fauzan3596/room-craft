@@ -5,7 +5,6 @@ import useRegisterForm from "../hooks/useRegisterForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { signInWithGoogle } from "../config/firebase";
-import Dropdown from "../components/Dropdown"; // Adjust the path as necessary
 
 const RegisterForm = ({ onRegisterSuccess }) => {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const RegisterForm = ({ onRegisterSuccess }) => {
   const successModal = useModal();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const { formData, setFormData, error, handleChange, handleSubmit } = useRegisterForm(
+  const { formData, error, handleChange, handleSubmit } = useRegisterForm(
     () => {
       console.log("Success callback triggered");
       successModal.openModal();
@@ -119,16 +118,6 @@ const RegisterForm = ({ onRegisterSuccess }) => {
                 </button>
               </div>
             </div>
-            <Dropdown
-              label="Role*"
-              options={[
-                { label: "User", value: "user" },
-                { label: "Admin", value: "admin" },
-              ]}
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              error={error}
-            />
             <button
               type="submit"
               className="w-full py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 transition"
