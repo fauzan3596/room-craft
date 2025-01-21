@@ -185,7 +185,7 @@ const EditRoomDetail = ({ room, setStep }) => {
           <span>50</span>
         </div>
         <div className="flex justify-end mt-4">
-          <Link to="/room">
+          <Link to="/user/room">
             <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20">Back</button>
           </Link>
           <button className="btn bg-green-900 w-20 text-white hover:bg-green-600">

@@ -43,7 +43,7 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
         title: "Success",
         text: "Your room design has been successfully saved",
       });
-      navigate("/room");
+      navigate("/user/room");
     },
     onError: (error) => {
       Swal.fire({

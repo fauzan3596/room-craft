@@ -61,7 +61,7 @@ const RoomTemplateCard = ({ roomTemplate }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         addMutation.mutate(savedTemplate);
-        navigate(`/room/detail/${savedTemplate.id}`);
+        navigate(`/user/room/detail/${savedTemplate.id}`);
       }
     });
   };

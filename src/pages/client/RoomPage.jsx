@@ -101,12 +101,12 @@ const RoomPage = () => {
       <div className="flex justify-between items-center">
         <h1 className="font-bold sm:text-3xl text-xl">Rooms</h1>{" "}
         <div className="flex gap-2">
-          <Link to="/room/template-room">
+          <Link to="/user/room/template-room">
             <button className="btn sm:btn-md btn-sm sm:text-base text-xs bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 rounded-badge">
              Room Templates
             </button>
           </Link>
-          <Link to="/room/add-room">
+          <Link to="/user/room/add-room">
             <button className="btn sm:btn-md btn-sm sm:text-base text-xs bg-green-900 text-white hover:bg-green-700 border-0 rounded-badge">
               Create New Room
             </button>

@@ -26,7 +26,7 @@ const TemplateRoomPage = () => {
 
   return (
     <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">
-      <Link to="/room">
+      <Link to="/user/room">
         <button className="btn mt-4 btn-outline border-[#A1824A] text-[#A1824A] hover:text-gray-700 hover:bg-[#F9DAD5] hover:border-0 rounded-badge">
           <ChevronLeft className="text-xl" /> Back to Rooms
         </button>

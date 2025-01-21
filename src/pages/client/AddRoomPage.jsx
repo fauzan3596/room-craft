@@ -29,7 +29,7 @@ const AddRoomPage = () => {
         title: "Success",
         text: "New room has been added successfully",
       });
-      navigate("/room");
+      navigate("/user/room");
     },
     onError: (error) => {
       Swal.fire({
@@ -199,7 +199,7 @@ const AddRoomPage = () => {
           />
         </div>
         <div className="flex justify-end mt-4">
-          <Link to="/room">
+          <Link to="/user/room">
             <button className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20">Cancel</button>
           </Link>
           <button className="btn bg-green-900 w-20 text-white hover:bg-green-600">
