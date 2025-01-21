@@ -104,12 +104,19 @@ const RoomPage = () => {
   return (
     <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-3xl">Rooms</h1>{" "}
-        <Link to="/room/add-room">
-          <button className="btn bg-green-900 text-white hover:bg-green-700 border-0 rounded-badge">
-            Create New Room
-          </button>
-        </Link>
+        <h1 className="font-bold sm:text-3xl text-xl">Rooms</h1>{" "}
+        <div className="flex gap-2">
+          <Link to="/room/template-room">
+            <button className="btn sm:btn-md btn-sm sm:text-base text-xs bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 rounded-badge">
+             Room Templates
+            </button>
+          </Link>
+          <Link to="/room/add-room">
+            <button className="btn sm:btn-md btn-sm sm:text-base text-xs bg-green-900 text-white hover:bg-green-700 border-0 rounded-badge">
+              Create New Room
+            </button>
+          </Link>
+        </div>
       </div>
       <label className="input bg-[#F5F0E5] text-[#A1824A] focus-within:outline-none focus-within:border-0 flex items-center gap-2 mt-5">
         <svg

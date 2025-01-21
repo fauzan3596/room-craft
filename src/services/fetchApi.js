@@ -1,6 +1,6 @@
 import {
   addDoc,
-  arrayUnion,
+  query,
   collection,
   deleteDoc,
   doc,
@@ -15,13 +15,6 @@ import Swal from "sweetalert2";
 export const addRoom = async (roomData) => {
   const roomRef = collection(db, "rooms");
   const docRef = await addDoc(roomRef, roomData);
-  if (docRef) {
-    Swal.fire({
-      title: "Success",
-      text: "New room added successfully",
-      icon: "success",
-    });
-  }
 };
 
 export const fetchAllRooms = async () => {
@@ -65,15 +58,6 @@ export const fetchAllFurnitures = async () => {
   });
 
   return data;
-};
-
-export const fetchFurnitureById = async (id) => {
-  const docRef = doc(db, "furnitures", id);
-
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() };
-  }
 };
 
 export const updateFurniture = async ({ id, newFurniture }) => {
@@ -167,3 +151,71 @@ export const fetchAllFavoriteFurnitures = async () => {
 
   return data;
 };
+
+export const fetchRoomTemplates = async () => {
+  const docRef = collection(db, "roomTemplates");
+  let data = [];
+  const querySnapshot = await getDocs(docRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
+
+export const addTemplate = async (roomData) => {
+  const docRef = doc(db, "rooms", roomData.id)
+  await setDoc(docRef, roomData)
+};
+
+export const addFavorite = async (furniture) => {
+  console.log(furniture)
+  try {
+    await setDoc(doc(db, "favorites", furniture.id), furniture);
+  } catch (error) {
+    console.error("Error adding favorite:", error);
+  }
+};
+
+// Fetch favorite cards
+export const fetchFavorites = async () => {
+  try {
+    const q = query(collection(db, "favorites"));
+    const data = []
+    const snapshot = await getDocs(q);
+    snapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    })
+
+    return data
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    return [];
+  }
+};
+
+// Remove favorite by ID
+export const removeFavorite = async (favoriteId) => {
+  try {
+    await deleteDoc(doc(db, "favorites", favoriteId));
+  } catch (error) {
+    console.error("Error removing favorite:", error);
+  }
+};
+
+export const fetchFurnitureById = async (id) => {
+  try {
+    const docRef = doc(db, "furnitures", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      console.warn(`Furniture with ID ${id} not found`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching furniture by ID:", error);
+    return null;
+  }
+}

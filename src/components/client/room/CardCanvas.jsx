@@ -1,8 +1,9 @@
 import { OrbitControls, Plane, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import React from "react";
+import React, { Suspense } from "react";
 import FurnitureRoomModel from "./FurnitureRoomModel";
+import CanvasLoader from "../room-detail/CanvasLoader";
 
 const CardCanvas = ({ length, width, height, wallColor, furnitures }) => {
   return (
@@ -11,6 +12,7 @@ const CardCanvas = ({ length, width, height, wallColor, furnitures }) => {
         position: [0, height * 1.5, length],
       }}
     >
+      <Suspense fallback={<CanvasLoader />}>
       {/* Cahaya */}
       <ambientLight intensity={0.5} />
       <directionalLight position={[0, 10, 5]} intensity={1} />
@@ -132,14 +134,18 @@ const CardCanvas = ({ length, width, height, wallColor, furnitures }) => {
         />
       </mesh>
 
-      {furnitures.map((furniture, index) => {
-        return <FurnitureRoomModel key={index} furniture={furniture} />;
-      })}
-      <OrbitControls
-        enableZoom={false}
-        maxPolarAngle={0.5}
-        minPolarAngle={0.5}
-      />
+      
+        {furnitures.map((furniture, index) => {
+          return <FurnitureRoomModel key={index} furniture={furniture} />;
+        })}
+        <OrbitControls
+          enableZoom={false}
+          autoRotate
+          autoRotateSpeed={3}
+          maxPolarAngle={0.5}
+          minPolarAngle={0.5}
+        />
+      </Suspense>
     </Canvas>
   );
 };

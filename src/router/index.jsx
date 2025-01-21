@@ -7,11 +7,14 @@ import {
   DetailRoomPage,
   EditDataPage,
   ErrorAdminPage,
+  FurnitureDetail,
+  FurniturePage,
   LandingPage,
   LoginForm,
   MasterDataPage,
   RegisterForm,
   RoomPage,
+  TemplateRoomPage,
   UserDataPage,
 } from "../pages";
 
@@ -61,6 +64,18 @@ const router = createBrowserRouter([
     path: "/room/detail/:id",
     element: <DetailRoomPage />,
   },
+  {
+    path: "/room/template-room",
+    element: <TemplateRoomPage />,
+  },
+  {
+    path: "/furniture",
+    element: <FurniturePage />
+  },
+  {
+    path: "/furniture/:id",
+    element: <FurnitureDetail />
+  }
 ]);
 
 export default router;
