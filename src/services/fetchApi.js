@@ -1,5 +1,4 @@
 import {
-  addDoc,
   arrayUnion,
   collection,
   deleteDoc,
@@ -8,7 +7,7 @@ import {
   getDocs,
   query,
   updateDoc,
-  where,
+  setDoc
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -80,8 +79,9 @@ export const saveRoomDesign = async ({ roomId, newRoom }) => {
 };
 
 export const addFavorite = async (furniture) => {
+  console.log(furniture)
   try {
-    await addDoc(collection(db, "favorites"), furniture);
+    await setDoc(doc(db, "favorites", furniture.id), furniture);
   } catch (error) {
     console.error("Error adding favorite:", error);
   }
@@ -91,8 +91,13 @@ export const addFavorite = async (furniture) => {
 export const fetchFavorites = async () => {
   try {
     const q = query(collection(db, "favorites"));
+    const data = []
     const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    snapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    })
+
+    return data
   } catch (error) {
     console.error("Error fetching favorites:", error);
     return [];
@@ -105,5 +110,22 @@ export const removeFavorite = async (favoriteId) => {
     await deleteDoc(doc(db, "favorites", favoriteId));
   } catch (error) {
     console.error("Error removing favorite:", error);
+  }
+};
+
+export const fetchFurnitureById = async (id) => {
+  try {
+    const docRef = doc(db, "furnitures", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      console.warn(`Furniture with ID ${id} not found`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching furniture by ID:", error);
+    return null;
   }
 };

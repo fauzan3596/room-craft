@@ -1,10 +1,12 @@
 import { Canvas } from "@react-three/fiber";
 import React from "react";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import { useNavigate } from "react-router-dom";
+
 
 
 const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
-
+    const navigate = useNavigate();
   return (
     <div className="p-4">
       <div className="flex items-stretch justify-between gap-4 rounded-xl bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
@@ -29,7 +31,10 @@ const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
               {isFavorite ? "Favorited" : "Favorite"}
             </span>
           </button>
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-fit">
+          <button
+            onClick={() => navigate(`/furniture/${furniture.id}`)}
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-fit"
+          >
             <span className="truncate">View</span>
           </button>
         </div>

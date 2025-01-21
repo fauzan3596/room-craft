@@ -1,10 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import FurniturePage from './pages/furniturePage.jsx'
+import App from './App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <FurniturePage />
+    < App/>
   </StrictMode>,
 )

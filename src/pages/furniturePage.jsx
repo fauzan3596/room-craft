@@ -44,15 +44,14 @@ function FurniturePage() {
       try {
         const userFavorites = await fetchFavorites();
         const favoriteIds = userFavorites.map((fav) => fav.furnitureId);
-        setFavorites(favoriteIds);
+        setFavorites(userFavorites);
       } catch (error) {
         console.error("Error fetching favorites:", error);
       }
     };
-  
+
     fetchUserFavorites();
   }, []);
-  
 
   // Filter furniture based on selected category
   useEffect(() => {
@@ -71,11 +70,13 @@ function FurniturePage() {
 
   const handleFavoriteToggle = async (furniture) => {
     const isFavorite = favorites.some((fav) => fav.id === furniture.id);
-  
+
     try {
       if (isFavorite) {
         // Remove from favorites
-        const favoriteToRemove = favorites.find((fav) => fav.id === furniture.id);
+        const favoriteToRemove = favorites.find(
+          (fav) => fav.id === furniture.id
+        );
         if (favoriteToRemove) {
           await removeFavorite(favoriteToRemove.id);
           setFavorites((prev) => prev.filter((fav) => fav.id !== furniture.id));
@@ -94,7 +95,7 @@ function FurniturePage() {
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
-  };  
+  };
 
   return (
     <div
@@ -122,8 +123,10 @@ function FurniturePage() {
               {categories.map((filter) => (
                 <div
                   key={filter}
-                  className={`flex items-center justify-center px-4 h-10 rounded-xl bg-[#f4f2f0] text-sm font-medium text-[#181411] cursor-pointer ${
-                    selectedCategory === filter ? "bg-[#e0ddd5]" : ""
+                  className={`flex items-center justify-center px-4 h-10 rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 ${
+                    selectedCategory === filter
+                      ? "bg-[#e0ddd5] text-[#000000]"
+                      : "bg-[#f4f2f0] text-[#181411] hover:bg-[#e0ddd5] hover:text-[#000000]"
                   }`}
                   onClick={() => setSelectedCategory(filter)}
                 >
@@ -143,8 +146,8 @@ function FurniturePage() {
                 <FurnitureCard
                   key={furniture.id}
                   furniture={furniture}
-                  isFavorite={favorites.includes(furniture.id)}
-                  onFavoriteToggle={() => handleFavoriteToggle(furniture.id)}
+                  isFavorite={favorites.some((fav) => fav.id === furniture.id)}
+                  onFavoriteToggle={() => handleFavoriteToggle(furniture)}
                 />
               ))
             ) : (
