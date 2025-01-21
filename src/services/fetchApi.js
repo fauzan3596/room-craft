@@ -114,9 +114,14 @@ export const deleteRoom = async (id) => {
   });
 }
 
-export const saveRoomDesign = async ({ roomId, currentRoom }) => {
-  const roomRef = doc(db, "rooms", roomId);
-  await updateDoc(roomRef, currentRoom);
+export const saveRoomDesign = async (updatedRoom) => {
+  const roomRef = doc(db, "rooms", updatedRoom.id);
+  await updateDoc(roomRef, updatedRoom);
+};
+
+export const updateFavoriteRoom = async (updatedRoom) => {
+  const roomRef = doc(db, "favoriteRooms", updatedRoom.id);
+  await updateDoc(roomRef, updatedRoom);
 };
 
 export const addRoomToFavorites = async (room) => {

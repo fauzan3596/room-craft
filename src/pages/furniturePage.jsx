@@ -6,6 +6,7 @@ import {
   removeFavorite,
 } from "../services/fetchApi";
 import FurnitureCard from "../components/furnitureCard";
+import { CardPagination } from "../components";
 
 function FurniturePage() {
   const [furnitures, setFurnitures] = useState([]);
@@ -13,6 +14,21 @@ function FurniturePage() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [favorites, setFavorites] = useState([]);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [forcePage, setForcePage] = useState(0);
+  const itemsPerPage = 6;
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentFurnitures = filteredFurnitures.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredFurnitures.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+    const newForcePage = event.selected;
+    setItemOffset(newOffset);
+    setForcePage(newForcePage);
+    window.scrollTo(0, 0);
+  };
 
   // Load furnitures and categories
   useEffect(() => {
@@ -66,6 +82,8 @@ function FurniturePage() {
         )
       );
     }
+    setItemOffset(0);
+    setForcePage(0);
   }, [selectedCategory, furnitures]);
 
   const handleFavoriteToggle = async (furniture) => {
@@ -137,24 +155,44 @@ function FurniturePage() {
           </div>
 
           {/* Furniture Section */}
-          <div className="layout-content-container flex flex-col flex-1 max-w-[960px]">
-            <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-[#181411]">
-              Featured furniture
-            </h3>
-            {filteredFurnitures.length > 0 ? (
-              filteredFurnitures.map((furniture) => (
-                <FurnitureCard
-                  key={furniture.id}
-                  furniture={furniture}
-                  isFavorite={favorites.some((fav) => fav.id === furniture.id)}
-                  onFavoriteToggle={() => handleFavoriteToggle(furniture)}
-                />
-              ))
-            ) : (
-              <p className="text-center text-sm text-[#897461]">
-                No furniture found
+          <div className="flex flex-col layout-content-container flex-1 max-w-[960px]">
+            <div>
+              <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-[#181411]">
+                Featured furniture
+              </h3>
+              {currentFurnitures.length > 0 ? (
+                currentFurnitures.map((furniture) => (
+                  <FurnitureCard
+                    key={furniture.id}
+                    furniture={furniture}
+                    isFavorite={favorites.some(
+                      (fav) => fav.id === furniture.id
+                    )}
+                    onFavoriteToggle={() => handleFavoriteToggle(furniture)}
+                  />
+                ))
+              ) : (
+                <p className="text-center text-sm text-[#897461]">
+                  No furniture found
+                </p>
+              )}
+            </div>
+            <div className="flex lg:flex-row flex-col items-center justify-between mt-5 gap-5">
+              <p className="sm:text-base text-sm">
+                Showing {itemOffset + 1}-
+                {endOffset <= filteredFurnitures?.length
+                  ? endOffset
+                  : filteredFurnitures?.length}{" "}
+                of {filteredFurnitures?.length} products
               </p>
-            )}
+              {filteredFurnitures?.length >= itemsPerPage && (
+                <CardPagination
+                  pageCount={pageCount}
+                  forcePage={forcePage}
+                  handlePageClick={handlePageClick}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
