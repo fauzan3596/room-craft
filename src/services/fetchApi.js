@@ -224,3 +224,14 @@ export const fetchFurnitureById = async (id) => {
     return null;
   }
 }
+
+export const fetchAllUsers = async () => {
+  const userRef = collection(db, "users");
+  let data = [];
+  const querySnapshot = await getDocs(userRef);
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}

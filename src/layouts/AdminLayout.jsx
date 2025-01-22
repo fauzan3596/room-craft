@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading, Navbar } from "../components";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllFurnitures } from "../services/fetchApi";
+import { fetchAllFurnitures, fetchAllUsers } from "../services/fetchApi";
 import {
   fetchFurnitureSuccess,
   fetchFurnitureFailed,
@@ -16,6 +16,7 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const pathname = useLocation();
   const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user);
 
   const {
     data: furnitures,
@@ -53,9 +54,31 @@ const AdminLayout = () => {
     }
   }, [screenWidth]);
 
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchAllUsers,
+  });
+  const currentUser = users?.find((u) => u.uid === user.uid);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        navigate("/login");
+      }
+    }
+
+    if (currentUser && currentUser.role !== "admin") {
+      navigate("/user");
+    }
+  }, [navigate, loading, user, currentUser]);
+
+  if (!user || !currentUser || currentUser.role !== "admin") {
+    return <Loading />;
+  }
 
   return (
     <div className="flex">

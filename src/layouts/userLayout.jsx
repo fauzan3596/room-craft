@@ -1,13 +1,15 @@
 import NavbarUser from "../components/navbarUser";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   fetchAllFavoriteFurnitures,
   fetchAllFavoriteRooms,
   fetchAllFurnitures,
   fetchAllRooms,
+  fetchAllUsers,
+  fetchRoomTemplates,
 } from "../services/fetchApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
   fetchRoomFailed,
@@ -30,9 +32,18 @@ import {
   fetchFavoriteFurnitureSuccess,
 } from "../redux/slice/favoriteFurnitureSlice";
 import { Loading } from "../components";
+import {
+  fetchRoomTemplateFailed,
+  fetchRoomTemplateStart,
+  fetchRoomTemplateSuccess,
+} from "../redux/slice/roomTemplateSlice";
+import Footer from "../components/Footer";
 
 const UserLayout = () => {
   const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user);
+  const pathname = useLocation();
+  const navigate = useNavigate();
   const {
     data: rooms,
     isLoading: isRoomsLoading,
@@ -42,7 +53,6 @@ const UserLayout = () => {
     queryKey: ["rooms"],
     queryFn: fetchAllRooms,
   });
-  const pathname = useLocation();
 
   useEffect(() => {
     dispatch(fetchRoomStart());
@@ -115,9 +125,50 @@ const UserLayout = () => {
     dispatch,
   ]);
 
+  const {
+    data: roomTemplates,
+    isLoading: isRoomTemplatesLoading,
+    isError: isRoomTemplatesError,
+    error: roomTemplatesError,
+  } = useQuery({
+    queryKey: ["roomTemplates"],
+    queryFn: fetchRoomTemplates,
+  });
+
+  useEffect(() => {
+    dispatch(fetchRoomTemplateStart());
+    if (isRoomTemplatesError) {
+      dispatch(fetchRoomTemplateFailed(roomTemplatesError.message));
+    } else if (roomTemplates) {
+      dispatch(fetchRoomTemplateSuccess(roomTemplates));
+    }
+  }, [roomTemplates, isRoomTemplatesError, roomTemplatesError, dispatch]);
+
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchAllUsers,
+  });
+  const currentUser = users?.find((u) => u.uid === user.uid);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        navigate("/login");
+      }
+    }
+
+    if (currentUser && currentUser.role !== "user") {
+      navigate("/admin");
+    }
+  }, [navigate, loading, user, currentUser]);
+
+  if (!user || !currentUser || currentUser.role !== "user") {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -126,12 +177,14 @@ const UserLayout = () => {
         {isRoomsLoading ||
         isFurnituresLoading ||
         isfavoriteFurnituresLoading ||
-        isfavoriteRoomsLoading ? (
+        isfavoriteRoomsLoading ||
+        isRoomTemplatesLoading ? (
           <Loading />
         ) : (
           <Outlet />
         )}
       </main>
+      <Footer />
     </div>
   );
 };

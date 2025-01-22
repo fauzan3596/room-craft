@@ -26,6 +26,11 @@ import FavoriteFurnitureList from "./client/room-detail/FavoriteFurnitureList";
 import AllRooms from "./client/room/AllRooms";
 import FavoriteRooms from "./client/room/FavoriteRooms";
 import RoomTemplateCard from "./client/room-template/RoomTemplateCard";
+import Header from "./client/home/Header";
+import FurnitureCollection from "./client/home/FurnitureCollection";
+import UnlockYourDreamHome from "./client/home/UnlockYourDreamHome";
+import TemplateCollection from "./client/home/TemplateCollection";
+import InspirationSection from "./client/home/InspirationSection";
 
 export {
   Navbar,
@@ -55,5 +60,10 @@ export {
   FavoriteFurnitureList,
   AllRooms,
   FavoriteRooms,
-  RoomTemplateCard
+  RoomTemplateCard,
+  Header,
+  FurnitureCollection,
+  UnlockYourDreamHome,
+  TemplateCollection,
+  InspirationSection,
 };
