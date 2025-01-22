@@ -109,7 +109,7 @@ const AddFurnitureToRoom = ({ room, setStep }) => {
         Your Room Design
       </h2>
       <RoomDesign room={room} />
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-8">
         <button
           className="btn bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 me-3 w-20"
           onClick={() => setStep(1)}

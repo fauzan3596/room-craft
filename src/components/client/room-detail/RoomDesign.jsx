@@ -1,16 +1,41 @@
 import { OrbitControls, Plane, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import FurnitureInRoomModel from "./FurnitureInRoomModel";
 import { useDispatch } from "react-redux";
 import { updateRoomState } from "../../../redux/slice/roomSlice";
 import { Camera } from "lucide-react";
+import CanvasLoader from "./CanvasLoader";
+import {
+  BackWallColor,
+  BackWallTexture,
+  FloorWithColor,
+  FloorWithTexture,
+  FrontWallColor,
+  FrontWallTexture,
+  LeftWallColor,
+  LeftWallTexture,
+  RightWallColor,
+  RightWallTexture,
+  RoomOptions,
+} from "./room-details";
 
 const RoomDesign = ({ room }) => {
-  const { id: roomId, length, width, height, wallColor, furnitures } = room;
+  const {
+    id: roomId,
+    length,
+    width,
+    height,
+    wallColor,
+    furnitures,
+    textureWalls,
+    textureFloors,
+  } = room;
   const [controlsEnabled, setControlsEnabled] = useState(true);
   const [currentWallColor, setCurrentWallColor] = useState(wallColor);
+  const [wallTexture, setWallTexture] = useState(textureWalls);
+  const [floorTexture, setFloorTexture] = useState(textureFloors);
   const dispatch = useDispatch();
   const canvasRef = useRef();
   const [image, setImage] = useState(null);
@@ -21,26 +46,19 @@ const RoomDesign = ({ room }) => {
     setImage(image);
   };
 
-  const colorChangeHandler = (e) => {
-    setCurrentWallColor(e.target.value);
-
+  useEffect(() => {
     const newRoom = {
       ...room,
       wallColor: currentWallColor,
+      textureWalls: wallTexture,
+      textureFloors: floorTexture,
     };
 
     dispatch(updateRoomState(newRoom));
-  };
+  }, [currentWallColor, wallTexture, floorTexture, dispatch]);
 
   return (
     <section className="mt-4">
-      <div className="flex justify-center">
-        <input
-          type="color"
-          value={currentWallColor}
-          onChange={colorChangeHandler}
-        />
-      </div>
       <div className="h-screen mt-4 drop-shadow-xl">
         <Canvas
           ref={canvasRef}
@@ -48,137 +66,136 @@ const RoomDesign = ({ room }) => {
           className="rounded-3xl mt-4"
           gl={{ preserveDrawingBuffer: true }}
         >
-          {/* Cahaya */}
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[0, 10, 5]} intensity={1} />
+          <Suspense fallback={<CanvasLoader />}>
+            {/* Cahaya */}
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[0, 10, 5]} intensity={1} />
 
-          {/* Lantai */}
-          <Plane
-            args={[length, width]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            receiveShadow
-          >
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.3}
-              color={currentWallColor}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              side={THREE.DoubleSide}
+            {/* Sky */}
+            <Sky
+              distance={100}
+              sunPosition={[0, 1, 0]}
+              inclination={0}
+              azimuth={0.25}
             />
-          </Plane>
-          <Sky
-            distance={100}
-            sunPosition={[0, 1, 0]}
-            inclination={0}
-            azimuth={0.25}
-          />
 
-          <Plane
-            args={[length, width]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, height, 0]}
-            receiveShadow
-          >
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.3}
-              color={currentWallColor}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              side={THREE.DoubleSide}
-            />
-          </Plane>
-
-          {/* Dinding Depan */}
-          <mesh position={[0, height / 2, -width / 2]}>
-            <boxGeometry args={[length, height, 0.01]} />
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.8}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              color={currentWallColor}
-              side={THREE.BackSide}
-            />
-          </mesh>
-
-          {/* Dinding Belakang */}
-          <mesh position={[0, height / 2, width / 2]}>
-            <boxGeometry args={[length, height, 0.01]} />
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.8}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              color={currentWallColor}
-              side={THREE.BackSide}
-            />
-          </mesh>
-
-          {/* Dinding Kiri */}
-          <mesh
-            position={[-length / 2, height / 2, 0]}
-            rotation={[0, Math.PI / 2, 0]}
-          >
-            <boxGeometry args={[width, height, 0.01]} />
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.8}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              color={currentWallColor}
-              side={THREE.BackSide}
-            />
-          </mesh>
-
-          {/* Dinding Kanan */}
-          <mesh
-            position={[length / 2, height / 2, 0]}
-            rotation={[0, Math.PI / 2, 0]}
-          >
-            <boxGeometry args={[width, height, 0.01]} />
-            <meshPhysicalMaterial
-              transparent={true}
-              opacity={0.8}
-              reflectivity={0.7}
-              ior={1.45}
-              roughness={0.1}
-              clearcoat={1}
-              clearcoatRoughness={0}
-              color={currentWallColor}
-              side={THREE.BackSide}
-            />
-          </mesh>
-
-          {/* Contoh Furnitur */}
-          {furnitures.map((furniture, index) => {
-            return (
-              <FurnitureInRoomModel
-                key={index}
-                furniture={furniture}
-                //   setFurnitures={setFurnitures}
-                setControlsEnabled={setControlsEnabled}
-                roomId={roomId}
+            {/* Lantai */}
+            {floorTexture ? (
+              <FloorWithTexture
+                length={length}
+                width={width}
+                floorTexture={floorTexture}
               />
-            );
-          })}
-          <OrbitControls enabled={controlsEnabled} />
+            ) : (
+              <FloorWithColor
+                length={length}
+                width={width}
+                currentWallColor={currentWallColor}
+              />
+            )}
+
+            {/* Atap */}
+            <Plane
+              args={[length, width]}
+              rotation={[-Math.PI / 2, 0, 0]}
+              position={[0, height, 0]}
+              receiveShadow
+            >
+              <meshPhysicalMaterial
+                transparent={true}
+                opacity={0.3}
+                color={currentWallColor}
+                reflectivity={0.7}
+                ior={1.45}
+                roughness={0.1}
+                clearcoat={1}
+                clearcoatRoughness={0}
+                side={THREE.DoubleSide}
+              />
+            </Plane>
+
+            {/* Dinding Depan */}
+            {wallTexture ? (
+              <FrontWallTexture
+                length={length}
+                height={height}
+                width={width}
+                wallTexture={wallTexture}
+              />
+            ) : (
+              <FrontWallColor
+                length={length}
+                height={height}
+                width={width}
+                currentWallColor={currentWallColor}
+              />
+            )}
+
+            {/* Dinding Belakang */}
+            {wallTexture ? (
+              <BackWallTexture
+                length={length}
+                width={width}
+                height={height}
+                wallTexture={wallTexture}
+              />
+            ) : (
+              <BackWallColor
+                length={length}
+                width={width}
+                height={height}
+                currentWallColor={currentWallColor}
+              />
+            )}
+
+            {/* Dinding Kiri */}
+            {wallTexture ? (
+              <LeftWallTexture
+                length={length}
+                width={width}
+                height={height}
+                wallTexture={wallTexture}
+              />
+            ) : (
+              <LeftWallColor
+                length={length}
+                width={width}
+                height={height}
+                currentWallColor={currentWallColor}
+              />
+            )}
+
+            {/* Dinding Kanan */}
+            {wallTexture ? (
+              <RightWallTexture
+                length={length}
+                width={width}
+                height={height}
+                wallTexture={wallTexture}
+              />
+            ) : (
+              <RightWallColor
+                length={length}
+                width={width}
+                height={height}
+                currentWallColor={currentWallColor}
+              />
+            )}
+
+            {/* Contoh Furnitur */}
+            {furnitures.map((furniture, index) => {
+              return (
+                <FurnitureInRoomModel
+                  key={index}
+                  furniture={furniture}
+                  //   setFurnitures={setFurnitures}
+                  setControlsEnabled={setControlsEnabled}
+                  roomId={roomId}
+                />
+              );
+            })}
+            <OrbitControls enabled={controlsEnabled} />
+          </Suspense>
         </Canvas>
         <button
           onClick={handleScreenshot}
@@ -188,6 +205,14 @@ const RoomDesign = ({ room }) => {
             <Camera className="h-8 w-8 " />
           </a>
         </button>
+        <RoomOptions
+          currentWallColor={currentWallColor}
+          setCurrentWallColor={setCurrentWallColor}
+          wallTexture={wallTexture}
+          setWallTexture={setWallTexture}
+          floorTexture={floorTexture}
+          setFloorTexture={setFloorTexture}
+        />
       </div>
     </section>
   );

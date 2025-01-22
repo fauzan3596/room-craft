@@ -21,24 +21,26 @@ const AllFurnitureList = ({
     if (forcePage === pageCount - 1 || pageCount === 0) return;
     setItemOffset(Number(itemOffset + Number(itemsPerPage)));
     setForcePage(forcePage + 1);
+    window.scrollTo(0, 0);
   };
 
   const prevPageChange = () => {
     if (forcePage === 0 || pageCount === 0) return;
     setItemOffset(Number(itemOffset - Number(itemsPerPage)));
     setForcePage(forcePage - 1);
+    window.scrollTo(0, 0);
   };
 
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {currentFurnitures.map((furniture) => (
+        {/* {currentFurnitures.map((furniture) => (
           <FurnitureCardRoom
             furniture={furniture}
             roomId={roomId}
             key={furniture.id}
           />
-        ))}
+        ))} */}
       </div>
       <div className="flex justify-center gap-3 mt-3">
         <ChevronLeft
