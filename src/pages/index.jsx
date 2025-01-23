@@ -15,6 +15,7 @@ import ErrorPage from "./ErrorPage";
 import FurniturePage from "./furniturePage";
 import FurnitureDetail from "./furnitureDetailPage";
 import HomePage from "./client/HomePage";
+import FavoritesPage from "./FavoritesPage";
 
 export {
   AdminHomePage,
@@ -33,5 +34,6 @@ export {
   ErrorPage,
   FurniturePage,
   FurnitureDetail,
-  HomePage
+  HomePage,
+  FavoritesPage,
 };

@@ -1,7 +1,8 @@
 import { Canvas } from "@react-three/fiber";
-import React from "react";
+import React, { Suspense } from "react";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
+import CanvasLoader from "./client/room-detail/CanvasLoader";
 
 const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
   const navigate = useNavigate();
@@ -47,16 +48,22 @@ const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
                 "radial-gradient(circle, rgba(70,70,70,1) 0%, rgba(0,0,0,1) 100%)",
             }}
           >
-            <ambientLight intensity={0.5} />
-            <directionalLight castShadow position={[1, 1, 1]} intensity={0.7} />
-            <pointLight position={[-2, 2, 3]} intensity={0.5} />
-            <Environment preset="studio" />
-            <CardModel
-              modelUrl={furniture.modelUrl}
-              position={furniture.position}
-              scale={furniture.scale}
-            />
-            <OrbitControls autoRotate autoRotateSpeed={5} />
+            <Suspense fallback={<CanvasLoader />}>
+              <ambientLight intensity={0.5} />
+              <directionalLight
+                castShadow
+                position={[1, 1, 1]}
+                intensity={0.7}
+              />
+              <pointLight position={[-2, 2, 3]} intensity={0.5} />
+              <Environment preset="studio" />
+              <CardModel
+                modelUrl={furniture.modelUrl}
+                position={furniture.position}
+                scale={furniture.scale}
+              />
+              <OrbitControls autoRotate autoRotateSpeed={5} />
+            </Suspense>
           </Canvas>
         </div>
       </div>

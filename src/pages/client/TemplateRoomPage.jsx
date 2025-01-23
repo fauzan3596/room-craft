@@ -7,22 +7,7 @@ import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 
 const TemplateRoomPage = () => {
-  const {
-    data: roomTemplates,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["roomTemplates"],
-    queryFn: fetchRoomTemplates,
-  });
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
+  
 
   return (
     <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">

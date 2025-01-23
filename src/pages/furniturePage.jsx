@@ -6,7 +6,7 @@ import {
   removeFavorite,
 } from "../services/fetchApi";
 import FurnitureCard from "../components/furnitureCard";
-import { CardPagination } from "../components";
+import { CardPagination, Loading } from "../components";
 
 function FurniturePage() {
   const [furnitures, setFurnitures] = useState([]);
@@ -16,6 +16,7 @@ function FurniturePage() {
   const [favorites, setFavorites] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const [forcePage, setForcePage] = useState(0);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 4;
 
   const endOffset = itemOffset + itemsPerPage;
@@ -30,7 +31,6 @@ function FurniturePage() {
     window.scrollTo(0, 0);
   };
 
-  // Load furnitures and categories
   useEffect(() => {
     const fetchFurnitureData = async () => {
       try {
@@ -39,7 +39,6 @@ function FurniturePage() {
         setFilteredFurnitures(data);
         console.log(data);
 
-        // Extract unique categories, including "All"
         const uniqueCategories = [
           "All",
           ...new Set(data.map((furniture) => furniture.category)),
@@ -48,18 +47,18 @@ function FurniturePage() {
         setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching furnitures:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchFurnitureData();
   }, []);
 
-  // Load user favorites
   useEffect(() => {
     const fetchUserFavorites = async () => {
       try {
         const userFavorites = await fetchFavorites();
-        const favoriteIds = userFavorites.map((fav) => fav.furnitureId);
         setFavorites(userFavorites);
       } catch (error) {
         console.error("Error fetching favorites:", error);
@@ -69,7 +68,6 @@ function FurniturePage() {
     fetchUserFavorites();
   }, []);
 
-  // Filter furniture based on selected category
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredFurnitures(furnitures);
@@ -91,7 +89,6 @@ function FurniturePage() {
 
     try {
       if (isFavorite) {
-        // Remove from favorites
         const favoriteToRemove = favorites.find(
           (fav) => fav.id === furniture.id
         );
@@ -100,7 +97,6 @@ function FurniturePage() {
           setFavorites((prev) => prev.filter((fav) => fav.id !== furniture.id));
         }
       } else {
-        // Add to favorites
         const favoriteData = {
           id: furniture.id,
           name: furniture.name,
@@ -115,24 +111,17 @@ function FurniturePage() {
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div
       className="relative flex flex-col min-h-screen bg-white overflow-x-hidden group/design-root"
       style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
     >
       <div className="layout-container flex h-full flex-col">
-        {/* Header */}
-        <header className="flex items-center justify-between border-b border-[#f4f2f0] px-10 py-3">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-4 text-[#181411]">
-              <h2 className="text-lg font-bold tracking-tight">RoomCraft</h2>
-            </div>
-          </div>
-        </header>
-
-        {/* Main Content */}
         <div className="flex flex-1 gap-1 px-6 py-5 justify-center">
-          {/* Filter Section */}
           <div className="layout-content-container flex flex-col w-80">
             <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-[#181411]">
               Filter
@@ -154,7 +143,6 @@ function FurniturePage() {
             </div>
           </div>
 
-          {/* Furniture Section */}
           <div className="flex flex-col layout-content-container flex-1 max-w-[960px]">
             <div>
               <h3 className="px-4 pt-4 pb-2 text-lg font-bold text-[#181411]">
