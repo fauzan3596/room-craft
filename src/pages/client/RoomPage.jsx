@@ -23,6 +23,8 @@ const RoomPage = () => {
   });
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+  const [itemOffset, setItemOffset] = useState(0);
+  const [forcePage, setForcePage] = useState(0);
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const { favoriteRooms } = useSelector((state) => state.favoriteRooms);
 
@@ -48,13 +50,16 @@ const RoomPage = () => {
         ? prev.filter((cat) => cat !== category)
         : [...prev, category]
     );
+    setItemOffset(0);
+    setForcePage(0);
   };
 
   useEffect(() => {
     const debounceHandler = setTimeout(() => {
       setDebouncedQuery(query);
     }, 500);
-
+    setItemOffset(0);
+    setForcePage(0);
     return () => clearTimeout(debounceHandler);
   }, [query]);
 
@@ -103,7 +108,7 @@ const RoomPage = () => {
         <div className="flex gap-2">
           <Link to="/user/room/template-room">
             <button className="btn sm:btn-md btn-sm sm:text-base text-xs bg-[#F9DAD5] hover:bg-[#DFB3AD] border-0 rounded-badge">
-             Room Templates
+              Room Templates
             </button>
           </Link>
           <Link to="/user/room/add-room">
@@ -162,7 +167,13 @@ const RoomPage = () => {
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          <AllRooms roomsResult={roomsResult} />
+          <AllRooms
+            roomsResult={roomsResult}
+            itemOffset={itemOffset}
+            setItemOffset={setItemOffset}
+            forcePage={forcePage}
+            setForcePage={setForcePage}
+          />
         </div>
 
         <input
@@ -176,7 +187,13 @@ const RoomPage = () => {
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          <FavoriteRooms favoriteRooms={favoriteRoomsResult} />
+          <FavoriteRooms
+            favoriteRooms={favoriteRoomsResult}
+            itemOffset={itemOffset}
+            setItemOffset={setItemOffset}
+            forcePage={forcePage}
+            setForcePage={setForcePage}
+          />
         </div>
       </div>
     </main>

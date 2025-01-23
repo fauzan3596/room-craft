@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
-const useRegisterForm = (onRegisterSuccess, openErrorModal, openSuccessModal) => {
+const useRegisterForm = (
+  onRegisterSuccess,
+  openErrorModal,
+  openSuccessModal
+) => {
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -20,11 +25,18 @@ const useRegisterForm = (onRegisterSuccess, openErrorModal, openSuccessModal) =>
 
     if (firstName && email && password) {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           console.log("User signed up:", {
             uid: userCredential.user.uid,
             email,
             firstName,
+          });
+          const user = userCredential.user;
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            email,
+            name: firstName,
+            role: "user",
           });
           setError("");
           openSuccessModal();

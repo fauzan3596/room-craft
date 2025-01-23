@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useModal from "../hooks/useModal";
 import useRegisterForm from "../hooks/useRegisterForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { signInWithGoogle } from "../config/firebase";
+import { useSelector } from "react-redux";
+import { Loading } from "../components";
 
 const RegisterForm = ({ onRegisterSuccess }) => {
   const navigate = useNavigate();
   const errorModal = useModal();
   const successModal = useModal();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { user, loading } = useSelector((state) => state.user);
 
   const { formData, error, handleChange, handleSubmit } = useRegisterForm(
     () => {
@@ -51,14 +54,27 @@ const RegisterForm = ({ onRegisterSuccess }) => {
     }
   };
 
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        navigate("/");
+      }
+    }
+  }, [navigate, loading]);
+
+  if (loading || user) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex h-screen">
       {/* Left Section */}
       <div className="w-1/2 flex flex-col justify-center items-center bg-gradient-to-br from-gray-800 to-gray-600 text-white p-10">
         <h1 className="text-5xl font-extrabold mb-6 text-center">RoomCraft</h1>
         <p className="text-lg text-gray-300 text-center mb-4 leading-relaxed">
-          Experience the ultimate 3D room design platform. Discover, visualize, and design your perfect space in
-          real-time with RoomCraft's innovative tools.
+          Experience the ultimate 3D room design platform. Discover, visualize,
+          and design your perfect space in real-time with RoomCraft's innovative
+          tools.
         </p>
         <ul className="text-sm text-gray-400 space-y-2 text-left">
           <li>✔ Real-time 3D Visualization</li>
@@ -70,10 +86,14 @@ const RegisterForm = ({ onRegisterSuccess }) => {
       {/* Right Section */}
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-4 md:p-6">
         <div className="max-w-md w-full p-6 rounded-lg">
-          <h1 className="mb-4 text-xl font-bold text-center text-white">Create Your RoomCraft Account</h1>
+          <h1 className="mb-4 text-xl font-bold text-center text-white">
+            Create Your RoomCraft Account
+          </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-400">Name*</label>
+              <label className="block mb-1 text-sm font-medium text-gray-400">
+                Name*
+              </label>
               <input
                 type="text"
                 name="firstName"
@@ -86,7 +106,9 @@ const RegisterForm = ({ onRegisterSuccess }) => {
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-400">Email*</label>
+              <label className="block mb-1 text-sm font-medium text-gray-400">
+                Email*
+              </label>
               <input
                 type="email"
                 name="email"
@@ -98,7 +120,9 @@ const RegisterForm = ({ onRegisterSuccess }) => {
               />
             </div>
             <div>
-              <label className="block mb-1 text-sm font-medium text-gray-400">Password*</label>
+              <label className="block mb-1 text-sm font-medium text-gray-400">
+                Password*
+              </label>
               <div className="relative">
                 <input
                   type={isPasswordVisible ? "text" : "password"}
@@ -139,7 +163,11 @@ const RegisterForm = ({ onRegisterSuccess }) => {
           </button>
           <p className="mt-4 text-xs text-center text-gray-400">
             Already have an account?{" "}
-            <button type="button" className="text-indigo-500 hover:underline" onClick={handleSwitchToLogin}>
+            <button
+              type="button"
+              className="text-indigo-500 hover:underline"
+              onClick={handleSwitchToLogin}
+            >
               Log In
             </button>
           </p>
@@ -150,7 +178,9 @@ const RegisterForm = ({ onRegisterSuccess }) => {
       {errorModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 className="text-lg font-bold text-red-600">Registration Error</h2>
+            <h2 className="text-lg font-bold text-red-600">
+              Registration Error
+            </h2>
             <p className="text-sm text-gray-600 mt-2">{error}</p>
             <div className="mt-4 flex justify-end">
               <button
@@ -168,8 +198,12 @@ const RegisterForm = ({ onRegisterSuccess }) => {
       {successModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 className="text-lg font-bold text-green-600">Registration Successful</h2>
-            <p className="text-sm text-gray-600 mt-2">Your account has been successfully created.</p>
+            <h2 className="text-lg font-bold text-green-600">
+              Registration Successful
+            </h2>
+            <p className="text-sm text-gray-600 mt-2">
+              Your account has been successfully created.
+            </p>
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => {

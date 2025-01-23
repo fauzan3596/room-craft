@@ -7,17 +7,22 @@ import {
   Database,
   Users2,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogOut } from "../../../redux/action";
 
 const Navbar = ({ isNavbarOpen, setIsNavbarOpen }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const navLinkStyle = ({ isActive }) => ({
     backgroundColor: isActive ? "#f9dad5 " : "transparent",
     fontWeight: isActive ? "bold" : "normal",
   });
 
   const logOutHandler = () => {
-
-  }
+    dispatch(userLogOut());
+    navigate("/login");
+  };
 
   return (
     <nav
@@ -86,7 +91,10 @@ const Navbar = ({ isNavbarOpen, setIsNavbarOpen }) => {
             {isNavbarOpen && <span className="ml-3">User Data</span>}
           </NavLink>
         </li>
-        <li onClick={() => logOutHandler} className="flex text-green-900 hover:bg-[#FFE4E6] px-4 py-3 rounded-md cursor-pointer">
+        <li
+          onClick={logOutHandler}
+          className="flex text-green-900 hover:bg-[#FFE4E6] px-4 py-3 rounded-md cursor-pointer"
+        >
           <LogOut className="h-5 w-5" />
           {isNavbarOpen && <span className="ml-3">Log Out</span>}
         </li>

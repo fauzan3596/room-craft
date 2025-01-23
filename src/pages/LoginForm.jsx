@@ -1,29 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useModal from "../hooks/useModal";
 import useLoginForm from "../hooks/useLoginForm";
-import { auth, signInWithGoogle } from "../config/firebase";
+import { auth, db, signInWithGoogle } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { userFailure, userStart, userSuccess } from "../redux/slice/userSlice";
+import { doc, setDoc } from "firebase/firestore";
+import { Loading } from "../components";
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const errorModal = useModal();
   const successModal = useModal();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user);
 
-  const { email, password, error, setEmail, setPassword, handleSubmit } = useLoginForm(
-    () => {
-      setIsAuthenticated(true);
-      onLoginSuccess();
-    },
-    errorModal,
-    successModal
-  );
+  const { email, password, error, setEmail, setPassword, handleSubmit } =
+    useLoginForm(
+      () => {
+        setIsAuthenticated(true);
+        // onLoginSuccess();
+      },
+      errorModal,
+      successModal
+    );
 
   const handleCloseSuccessModal = () => {
     successModal.closeModal();
-    onLoginSuccess();
+    // onLoginSuccess();
   };
 
   const handleSignUpRedirect = () => {
@@ -31,29 +38,61 @@ const LoginForm = ({ onLoginSuccess }) => {
   };
 
   const handleGoogleLogin = async () => {
+    dispatch(userStart());
     try {
       const user = await signInWithGoogle();
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        role: "user",
+      });
+      dispatch(
+        userSuccess({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+        })
+      );
       console.log("Google login successful:", user);
       successModal.openModal();
       setTimeout(() => {
         successModal.closeModal();
-        navigate("/");
+        navigate("/user");
       }, 2000);
     } catch (error) {
+      dispatch(userFailure(error.message));
       console.error("Google login failed:", error.message);
       errorModal.openModal();
     }
   };
 
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        navigate("/user");
+      }
+    }
+  }, [navigate, loading]);
+
+  if (loading || user) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex h-screen">
       <div className="w-1/2 bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex flex-col justify-center items-center p-10">
         <div className="max-w-md text-center">
-          <h2 className="uppercase tracking-widest text-sm font-medium mb-4">RoomCraft</h2>
-          <h1 className="text-4xl font-extrabold mb-6">Design Your Dream Space</h1>
+          <h2 className="uppercase tracking-widest text-sm font-medium mb-4">
+            RoomCraft
+          </h2>
+          <h1 className="text-4xl font-extrabold mb-6">
+            Design Your Dream Space
+          </h1>
           <p className="text-sm leading-relaxed mb-6">
-            Transform your home planning experience with real-time 3D visualization. Tailor your space effortlessly with
-            furniture that fits perfectly.
+            Transform your home planning experience with real-time 3D
+            visualization. Tailor your space effortlessly with furniture that
+            fits perfectly.
           </p>
         </div>
       </div>
@@ -75,7 +114,9 @@ const LoginForm = ({ onLoginSuccess }) => {
         ) : (
           <div className="max-w-sm w-full">
             <h1 className="text-2xl font-bold mb-6">Welcome Back</h1>
-            <p className="text-sm mb-8">Enter your email and password to access your account.</p>
+            <p className="text-sm mb-8">
+              Enter your email and password to access your account.
+            </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -107,7 +148,10 @@ const LoginForm = ({ onLoginSuccess }) => {
                 </a>
               </div>
 
-              <button type="submit" className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition">
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition"
+              >
                 Sign In
               </button>
             </form>
@@ -129,7 +173,11 @@ const LoginForm = ({ onLoginSuccess }) => {
 
             <p className="text-sm text-center mt-6">
               Don’t have an account?{" "}
-              <button type="button" className="text-blue-500 hover:underline" onClick={handleSignUpRedirect}>
+              <button
+                type="button"
+                className="text-blue-500 hover:underline"
+                onClick={handleSignUpRedirect}
+              >
                 Sign Up
               </button>
             </p>
@@ -159,8 +207,12 @@ const LoginForm = ({ onLoginSuccess }) => {
       {successModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 className="text-lg font-bold text-green-600">Login Successful</h2>
-            <p className="text-sm text-gray-600 mt-2">You have successfully logged in. Welcome back!</p>
+            <h2 className="text-lg font-bold text-green-600">
+              Login Successful
+            </h2>
+            <p className="text-sm text-gray-600 mt-2">
+              You have successfully logged in. Welcome back!
+            </p>
             <div className="mt-4 flex justify-end">
               <button
                 onClick={handleCloseSuccessModal}

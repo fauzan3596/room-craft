@@ -47,6 +47,8 @@ const AddRoomPage = () => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       furnitures: [],
+      textureFloors: "",
+      textureWalls: "",
     };
     addMutation.mutate(newRoom);
   };

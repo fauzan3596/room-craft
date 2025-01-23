@@ -1,12 +1,27 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { userLogOut } from "../redux/action";
+import { useNavigate } from "react-router-dom";
 
 const NavbarUser = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(userLogOut());
+    navigate("/login");
+  };
+
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-4 text-[#181411]">
           <div className="size-4">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
                 fill="currentColor"
@@ -20,16 +35,28 @@ const NavbarUser = () => {
       </div>
       <div className="flex flex-1 justify-end gap-8">
         <div className="flex items-center gap-9">
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="/user/furniture">
+          <a
+            className="text-[#181411] text-sm font-medium leading-normal"
+            href="/user/furniture"
+          >
             Furniture
           </a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="/user/room">
+          <a
+            className="text-[#181411] text-sm font-medium leading-normal"
+            href="/user/room"
+          >
             Room
           </a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">
+          <a
+            className="text-[#181411] text-sm font-medium leading-normal"
+            href="#"
+          >
             Favorite
           </a>
-          <a className="text-[#181411] text-sm font-medium leading-normal" href="#">
+          <a
+            className="text-[#181411] text-sm font-medium leading-normal"
+            href="#"
+          >
             About
           </a>
         </div>
@@ -70,24 +97,38 @@ const NavbarUser = () => {
               </svg>
             </div>
           </button>
-          <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-            <div
-              className="text-[#181411]"
-              data-icon="User"
-              data-size="20px"
-              data-weight="regular"
+          <div className="dropdown dropdown-end">
+            <button
+              tabIndex={0}
+              role="button"
+              className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                height="20px"
-                fill="currentColor"
-                viewBox="0 0 256 256"
+              <div
+                className="text-[#181411]"
+                data-icon="User"
+                data-size="20px"
+                data-weight="regular"
               >
-                <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
-              </svg>
-            </div>
-          </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  height="20px"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                </svg>
+              </div>
+            </button>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li onClick={logoutHandler}>
+                <a>Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </header>

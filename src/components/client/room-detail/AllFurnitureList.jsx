@@ -21,12 +21,14 @@ const AllFurnitureList = ({
     if (forcePage === pageCount - 1 || pageCount === 0) return;
     setItemOffset(Number(itemOffset + Number(itemsPerPage)));
     setForcePage(forcePage + 1);
+    window.scrollTo(0, 0);
   };
 
   const prevPageChange = () => {
     if (forcePage === 0 || pageCount === 0) return;
     setItemOffset(Number(itemOffset - Number(itemsPerPage)));
     setForcePage(forcePage - 1);
+    window.scrollTo(0, 0);
   };
 
   return (

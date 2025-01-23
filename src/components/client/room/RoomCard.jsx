@@ -8,8 +8,18 @@ import { HeartIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const RoomCard = ({ room }) => {
-  const { id, name, category, length, width, height, furnitures, wallColor } =
-    room;
+  const {
+    id,
+    name,
+    category,
+    length,
+    width,
+    height,
+    furnitures,
+    wallColor,
+    textureWalls,
+    textureFloors,
+  } = room;
   const { favoriteRooms } = useSelector((state) => state.favoriteRooms);
   const [animation, setAnimation] = useState(false);
 
@@ -86,6 +96,8 @@ const RoomCard = ({ room }) => {
           height={height}
           wallColor={wallColor}
           furnitures={furnitures}
+          textureWalls={textureWalls}
+          textureFloors={textureFloors}
         />
       </figure>
       <div className="card-body text-[#A1824A] lg:w-3/4">

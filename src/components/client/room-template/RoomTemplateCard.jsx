@@ -16,6 +16,8 @@ const RoomTemplateCard = ({ roomTemplate }) => {
     height,
     furnitures,
     wallColor,
+    textureFloors,
+    textureWalls,
   } = roomTemplate;
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -75,6 +77,8 @@ const RoomTemplateCard = ({ roomTemplate }) => {
           height={height}
           wallColor={wallColor}
           furnitures={furnitures}
+          textureFloors={textureFloors}
+          textureWalls={textureWalls}
         />
       </figure>
       <div className="card-body">
