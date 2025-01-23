@@ -5,9 +5,10 @@ import { Loading, RoomTemplateCard } from "../../components";
 import ErrorPage from "../ErrorPage";
 import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const TemplateRoomPage = () => {
-  
+  const { roomTemplates } = useSelector((state) => state.roomTemplates);
 
   return (
     <main className="min-h-screen w-full lg:px-10 py-10 px-5 ">
