@@ -182,7 +182,6 @@ export const addFavorite = async (furniture) => {
   }
 };
 
-// Fetch favorite cards
 export const fetchFavorites = async () => {
   try {
     const q = query(collection(db, "favorites"));
@@ -199,7 +198,6 @@ export const fetchFavorites = async () => {
   }
 };
 
-// Remove favorite by ID
 export const removeFavorite = async (favoriteId) => {
   try {
     await deleteDoc(doc(db, "favorites", favoriteId));

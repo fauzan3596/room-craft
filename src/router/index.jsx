@@ -16,8 +16,10 @@ import {
   RoomPage,
   TemplateRoomPage,
   UserDataPage,
+  FavoritesPage
 } from "../pages";
 import UserLayout from "../layouts/userLayout";
+import AboutPage from "../pages/AboutPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
       {
         path: "furniture/:id",
         element: <FurnitureDetail />,
+      },
+      {
+        path: "favorites",
+        element: <FavoritesPage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
       },
     ],
   },

@@ -14,6 +14,7 @@ import TemplateRoomPage from "./client/TemplateRoomPage";
 import ErrorPage from "./ErrorPage";
 import FurniturePage from "./furniturePage";
 import FurnitureDetail from "./furnitureDetailPage";
+import FavoritesPage from "./FavoritesPage";
 
 export {
   AdminHomePage,
@@ -32,4 +33,5 @@ export {
   ErrorPage,
   FurniturePage,
   FurnitureDetail,
+  FavoritesPage,
 };

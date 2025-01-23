@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
 import { fetchFurnitureById } from "../services/fetchApi";
+import { Loading } from "../components"
 
 const FurnitureDetail = () => {
   const { id } = useParams();
@@ -30,11 +31,7 @@ const FurnitureDetail = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-      </div>
-    );
+        return <Loading />;
   }
 
   if (error) {
@@ -47,7 +44,6 @@ const FurnitureDetail = () => {
 
   return (
     <div className="px-8 sm:px-16 md:px-40 py-8 flex justify-center">
-      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="p-6">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">{furniture.name}</h1>
           <div className="relative bg-gray-800 aspect-video rounded-lg overflow-hidden mb-6">
@@ -74,7 +70,6 @@ const FurnitureDetail = () => {
           </p>
         </div>
       </div>
-    </div>
   );
 };
 
