@@ -1,5 +1,6 @@
 import React from "react";
 import roomImage from "../../../assets/download2.png";
+import { Link } from "react-router-dom";
 
 const UnlockYourDreamHome = () => {
   return (
@@ -21,12 +22,16 @@ const UnlockYourDreamHome = () => {
             your style and transform your living space
           </p>
           <div className="flex mt-2 gap-5 md:flex-row flex-col">
-            <button className="btn bg-green-900 hover:bg-green-600 text-white rounded-badge md:w-1/3 ">
-              Explore Now
-            </button>
-            <button className="btn btn-outline text-[#F8AAA1] hover:bg-[#F8AAA1] hover:text-white hover:border-[#F8AAA1] rounded-badge md:w-1/3">
-              Start Designing
-            </button>
+            <Link to="/user/furniture">
+              <button className="btn bg-green-900 hover:bg-green-600 text-white rounded-badge md:w-1/3 ">
+                Explore Now
+              </button>
+            </Link>
+            <Link to="/user/room">
+              <button className="btn btn-outline text-[#F8AAA1] hover:bg-[#F8AAA1] hover:text-white hover:border-[#F8AAA1] rounded-badge md:w-1/3">
+                Start Designing
+              </button>
+            </Link>
           </div>
         </div>
       </div>

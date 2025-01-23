@@ -1,6 +1,7 @@
 import React from "react";
 import headerImage from "../../../assets/download.png";
 import { Box, Hammer, Palette } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -12,9 +13,11 @@ const Header = () => {
             RoomCraft is a revolutionary 3D product showcase that empowers users
             to easily design their perfect room layouts in real-time
           </p>
-          <button className="btn bg-green-900 hover:bg-green-700 text-white rounded-badge md:w-1/3 md:mt-5">
-            Get Started
-          </button>
+          <Link to="/user/room">
+            <button className="btn bg-green-900 hover:bg-green-700 text-white rounded-badge md:w-1/3 md:mt-5">
+              Get Started
+            </button>
+          </Link>
         </div>
         <div className="flex-[0.5] flex justify-center">
           <img
