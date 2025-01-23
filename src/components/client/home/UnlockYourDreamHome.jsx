@@ -23,12 +23,12 @@ const UnlockYourDreamHome = () => {
           </p>
           <div className="flex mt-2 gap-5 md:flex-row flex-col">
             <Link to="/user/furniture">
-              <button className="btn bg-green-900 hover:bg-green-600 text-white rounded-badge md:w-1/3 ">
+              <button className="btn bg-green-900 hover:bg-green-600 text-white rounded-badge md:w-40 w-full">
                 Explore Now
               </button>
             </Link>
             <Link to="/user/room">
-              <button className="btn btn-outline text-[#F8AAA1] hover:bg-[#F8AAA1] hover:text-white hover:border-[#F8AAA1] rounded-badge md:w-1/3">
+              <button className="btn btn-outline text-[#F8AAA1] hover:bg-[#F8AAA1] hover:text-white hover:border-[#F8AAA1] rounded-badge md:w-40 w-full">
                 Start Designing
               </button>
             </Link>
