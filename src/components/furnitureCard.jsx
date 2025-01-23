@@ -3,10 +3,8 @@ import React from "react";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
 
-
-
 const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="p-4">
       <div className="flex items-stretch justify-between gap-4 rounded-xl bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
@@ -53,7 +51,11 @@ const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
             <directionalLight castShadow position={[1, 1, 1]} intensity={0.7} />
             <pointLight position={[-2, 2, 3]} intensity={0.5} />
             <Environment preset="studio" />
-            <CardModel modelUrl={furniture.modelUrl} />
+            <CardModel
+              modelUrl={furniture.modelUrl}
+              position={furniture.position}
+              scale={furniture.scale}
+            />
             <OrbitControls autoRotate autoRotateSpeed={5} />
           </Canvas>
         </div>
@@ -62,11 +64,13 @@ const FurnitureCard = ({ furniture, isFavorite, onFavoriteToggle }) => {
   );
 };
 
-const CardModel = ({ modelUrl }) => {
+const CardModel = ({ modelUrl, position = [0, 0, 0], scale = [1, 1, 1] }) => {
   const { scene } = useGLTF(
     `https://res.cloudinary.com/dlnqwafkc/image/upload/v1736614683/${modelUrl}.glb`
   );
-  return <primitive object={scene} />;
+  scene.scale.set(scale[0], scale[1], scale[2]);
+
+  return <primitive object={scene} position={position} />;
 };
 
 export default FurnitureCard;

@@ -67,3 +67,12 @@ export const formatCardDate = (date) => {
   };
   return new Date(date).toLocaleDateString("en-US", options);
 };
+
+export const formatWIBTime = (date) => {
+  const utcDate = new Date(date);
+  const wibOffset = 7 * 60;
+  const wibDate = new Date(utcDate.getTime() + wibOffset * 60 * 1000);
+  const formattedDate = wibDate.toISOString().slice(0, 19);
+
+  return formattedDate;
+};

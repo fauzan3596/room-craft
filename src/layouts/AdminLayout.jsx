@@ -9,6 +9,11 @@ import {
   fetchFurnitureFailed,
   fetchFurnitureStart,
 } from "../redux/slice/furnitureSlice";
+import {
+  fetchAllUserFailed,
+  fetchAllUserStart,
+  fetchAllUserSuccess,
+} from "../redux/slice/allUserSlice";
 
 const AdminLayout = () => {
   const [isNavbarOpen, setIsNavbarOpen] = useState(true);
@@ -54,11 +59,26 @@ const AdminLayout = () => {
     }
   }, [screenWidth]);
 
-  const { data: users } = useQuery({
+  const {
+    data: users,
+    isUsersLoading,
+    isUsersError,
+    userError,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: fetchAllUsers,
   });
-  const currentUser = users?.find((u) => u.uid === user.uid);
+
+  useEffect(() => {
+    dispatch(fetchAllUserStart());
+    if (isUsersError) {
+      dispatch(fetchAllUserFailed(userError.message));
+    } else if (users) {
+      dispatch(fetchAllUserSuccess(users));
+    }
+  }, [users, isUsersError, userError, dispatch]);
+
+  const currentUser = users?.find((u) => u.uid === user?.uid);
 
   useEffect(() => {
     window.scrollTo(0, 0);

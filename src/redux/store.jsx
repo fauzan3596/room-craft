@@ -5,6 +5,7 @@ import favoriteRoomSlice from "./slice/favoriteRoomSlice";
 import favoriteFurnitureSlice from "./slice/favoriteFurnitureSlice";
 import roomTemplateSlice from "./slice/roomTemplateSlice";
 import userSlice from "./slice/userSlice";
+import allUserSlices from "./slice/allUserSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     favoriteFurnitures: favoriteFurnitureSlice,
     roomTemplates: roomTemplateSlice,
     user: userSlice,
+    allUsers: allUserSlices,
   },
 });
 
