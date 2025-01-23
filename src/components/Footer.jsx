@@ -8,9 +8,7 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start">
           <div className="mb-4">
             {/* Logo (Placeholder) */}
-            <div className="bg-[#AAC2B5] w-10 h-10 rounded-full flex items-center justify-center">
-              <span className="text-green-900 text-xl font-bold">⦿</span>
-            </div>
+            <img src="/room-craft-logo.png" alt="Logo" className="h-14 w-14" />
           </div>
           <p className="text-sm text-center md:text-left">
             © 2025 RoomCraft, Inc. <br /> All rights reserved.

@@ -31,6 +31,7 @@ import FurnitureCollection from "./client/home/FurnitureCollection";
 import UnlockYourDreamHome from "./client/home/UnlockYourDreamHome";
 import TemplateCollection from "./client/home/TemplateCollection";
 import InspirationSection from "./client/home/InspirationSection";
+import UserTable from "./admin/user-data/UserTable";
 
 export {
   Navbar,
@@ -66,4 +67,5 @@ export {
   UnlockYourDreamHome,
   TemplateCollection,
   InspirationSection,
+  UserTable,
 };

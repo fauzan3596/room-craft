@@ -4,9 +4,10 @@ import useModal from "../hooks/useModal";
 import useRegisterForm from "../hooks/useRegisterForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { signInWithGoogle } from "../config/firebase";
+import { db, signInWithGoogle } from "../config/firebase";
 import { useSelector } from "react-redux";
 import { Loading } from "../components";
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterForm = ({ onRegisterSuccess }) => {
   const navigate = useNavigate();
@@ -48,6 +49,13 @@ const RegisterForm = ({ onRegisterSuccess }) => {
         successModal.closeModal();
         navigate("/login");
       }, 2000);
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        role: "user",
+        createdAt: new Date().toISOString(),
+      });
     } catch (error) {
       console.error("Google registration error:", error.message);
       errorModal.openModal();
@@ -57,7 +65,7 @@ const RegisterForm = ({ onRegisterSuccess }) => {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        navigate("/");
+        navigate("/user");
       }
     }
   }, [navigate, loading]);

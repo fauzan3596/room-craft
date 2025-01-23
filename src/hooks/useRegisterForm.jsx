@@ -37,6 +37,7 @@ const useRegisterForm = (
             email,
             name: firstName,
             role: "user",
+            createdAt: new Date().toISOString(),
           });
           setError("");
           openSuccessModal();

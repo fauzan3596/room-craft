@@ -148,7 +148,7 @@ const UserLayout = () => {
     queryKey: ["users"],
     queryFn: fetchAllUsers,
   });
-  const currentUser = users?.find((u) => u.uid === user.uid);
+  const currentUser = users?.find((u) => u.uid === user?.uid);
 
   useEffect(() => {
     window.scrollTo(0, 0);

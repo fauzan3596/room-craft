@@ -6,6 +6,8 @@ const DetailCard = ({ type }) => {
   const { furnitures } = useSelector(
     (state) => state.furnitures
   );
+  const { allUsers } = useSelector((state) => state.allUsers);
+  const filteredUsers = allUsers.filter((user) => user.role === "user");
 
   return (
     <section className="card bg-green-900 bg-opacity-10 text-green-900 w-full shadow-xl">
@@ -21,7 +23,7 @@ const DetailCard = ({ type }) => {
           </h2>
         </div>
         <p className="font-bold text-4xl mt-3">
-          {type === "products" ? furnitures.length : "5"}
+          {type === "products" ? furnitures.length : filteredUsers.length}
         </p>
       </div>
     </section>

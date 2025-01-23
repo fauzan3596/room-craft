@@ -34,7 +34,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="hover:text-black">
+          <Link to="/user/favorite" className="hover:text-black">
             Favorite
           </Link>
         </li>

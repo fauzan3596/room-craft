@@ -46,6 +46,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         email: user.email,
         name: user.displayName,
         role: "user",
+        createdAt: new Date().toISOString(),
       });
       dispatch(
         userSuccess({
