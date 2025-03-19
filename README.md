@@ -1,4 +1,4 @@
-# ![RoomCraft](https://iharsh234.github.io/WebApp/images/demo/demo_landing.JPG)
+# ![RoomCraft](https://github.com/fauzan3596/room-craft/blob/main/public/screenshot/home.png)
 # RoomCraft
 <table>
 <tr>
@@ -21,7 +21,7 @@ Currently it is working on all NSE (India) Stocks, BSE (India) Stocks Symbol wil
 ![](https://iharsh234.github.io/WebApp/images/demo/web_app_face.JPG)
 
 ### Query Filled Form
-![asd](https://iharsh234.github.io/WebApp/images/demo/demo_query.JPG)
+![](https://iharsh234.github.io/WebApp/images/demo/demo_query.JPG)
 
 ### Charts
 ![](https://iharsh234.github.io/WebApp/images/demo/demo_chart1.JPG)
