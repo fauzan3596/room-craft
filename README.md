@@ -1,4 +1,4 @@
-# ![RoomCraft](https://github.com/fauzan3596/room-craft/blob/main/public/screenshot/home.png)
+# ![RoomCraft](https://github.com/fauzan3596/room-craft/blob/main/public/screenshot/Home_Page.jpeg)
 # RoomCraft
 <table>
 <tr>
