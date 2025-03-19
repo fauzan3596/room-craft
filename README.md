@@ -159,7 +159,7 @@ A few of the things you can do with RoomCraft:
    ```
 
 
-## [License]
+## License
 
 MIT © [Muhammad Fauzan Ramadhan ](https://github.com/fauzan3596)
 
