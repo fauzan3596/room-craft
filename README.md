@@ -159,13 +159,7 @@ A few of the things you can do with RoomCraft:
    ```
 
 
-## Team
-
-[![Muhammad Fauzan Ramadhan](https://github.com/fauzan3596/room-craft/blob/main/public/screenshot/photo.jpg)](https://github.com/fauzan3596)  | [![Adnan Yazid Ardiansyah](https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg)](https://github.com/adnanyazidar) | [![Kivlan Izzudin Subagyo](https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg)](https://github.com/Kivlanizzu)
----|---
-[Muhammad Fauzan Ramadhan](https://github.com/fauzan3596@gmail.com) |[Adnan Yazid Ardiansyah](https://github.com/adnanyazidar) |[Kivlan Izzudin Subagyo](https://github.com/Kivlanizzu)
-
-## [License](https://github.com/iharsh234/WebApp/blob/master/LICENSE.md)
+## [License]
 
 MIT © [Muhammad Fauzan Ramadhan ](https://github.com/fauzan3596)
 
